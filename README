@@ -1,0 +1,20 @@
+LANXANG
+=======
+
+This project aims to provide input method for Lao/Esaan Tham script on various
+frameworks.
+
+FEATURES
+
+ * Internal keyboard map(s).
+
+ * Input sequence reordering, so that users can type text from left to right
+   (with some exception like medial RA), and it will convert the sequence
+   into Unicode phonetic order.
+
+ * Input sequence check, so that orthographically invalid sequences are
+   filtered out. The strictness of the filter can be configured (pass through,
+   basic check, strict).
+
+--
+First created: 10 November 2012.
