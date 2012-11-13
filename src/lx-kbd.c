@@ -54,8 +54,19 @@ static const gunichar tham_qwerty_map_lv3[] =
 gunichar
 lx_map_key (guint keyval, gboolean is_lv3)
 {
-  return is_lv3 ? tham_qwerty_map_lv3[keyval - 0x20]
-                : tham_qwerty_map[keyval - 0x20];
+  if (0x20 <= keyval && keyval <= 0x7f)
+    {
+      /* English -> Tham */
+      return is_lv3 ? tham_qwerty_map_lv3[keyval - 0x20]
+                    : tham_qwerty_map[keyval - 0x20];
+    }
+  else if (0x1001a20 <= keyval && keyval <= 0x1001aad)
+    {
+      /* XKB Tham Unicode keysym */
+      return keyval - 0x1000000;
+    }
+
+  return 0;
 }
 
 

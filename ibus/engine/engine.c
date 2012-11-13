@@ -164,6 +164,9 @@ ibus_lanxang_engine_process_key_event (IBusEngine *engine,
     }
 
   new_char = lx_map_key (keyval, modifiers & IBUS_MOD5_MASK);
+  if (0 == new_char)
+    return FALSE;
+
   text = ibus_text_new_from_unichar (new_char);
 
   ibus_engine_commit_text (engine, text);
