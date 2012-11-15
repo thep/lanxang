@@ -17,14 +17,14 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 
-#ifndef __KBD_H__
-#define __KBD_H__
+#ifndef __LX_KBD_H__
+#define __LX_KBD_H__
 
 #include <glib.h>
 
 gunichar lx_map_key (guint keyval, gboolean is_lv3);
 
-#endif /* __KBD_H__ */
+#endif /* __LX_KBD_H__ */
 
 /*
 vi:ts=2:nowrap:ai:expandtab
