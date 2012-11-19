@@ -9,6 +9,8 @@ AM_CPPFLAGS = \
 liblanxang_a_SOURCES = \
 	lx-kbd.h \
 	lx-kbd.c \
+	lx-im-table.h \
+	lx-im-table.c \
 	$(NULL)
 
 liblanxang_a_CFLAGS = \
