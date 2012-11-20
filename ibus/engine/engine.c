@@ -23,17 +23,23 @@
 
 #include "engine.h"
 #include "lx-kbd.h"
+#include "lx-im-table.h"
 #include <glib.h>
 #include <string.h>
 
 typedef struct _IBusLanXangEngine IBusLanXangEngine;
 typedef struct _IBusLanXangEngineClass IBusLanXangEngineClass;
 
+#define PREEDIT_BUFF_LEN 4
 struct _IBusLanXangEngine
 {
   IBusEngine parent;
 
   /* members here */
+  gboolean is_preedit;
+  gunichar preedit_str[PREEDIT_BUFF_LEN];
+  gint     preedit_len;
+  IscMode  isc_mode;
 };
 
 struct _IBusLanXangEngineClass
@@ -102,6 +108,16 @@ ibus_lanxang_engine_class_init (IBusLanXangEngineClass *klass)
 static void
 ibus_lanxang_engine_init (IBusLanXangEngine *lanxang_engine)
 {
+  lanxang_engine->is_preedit = FALSE;
+  lanxang_engine->preedit_str[0] = 0;
+  lanxang_engine->preedit_len = 0;
+  lanxang_engine->isc_mode = ISC_BASIC;
+}
+
+static gboolean
+is_client_support_surrounding (IBusEngine *engine)
+{
+  return engine->client_capabilities & IBUS_CAP_SURROUNDING_TEXT;
 }
 
 static gboolean
@@ -141,13 +157,124 @@ is_context_intact_key (guint keyval)
 }
 
 static gboolean
+ibus_lanxang_engine_append_preedit (IBusLanXangEngine *lanxang_engine,
+                                    gunichar new_char)
+{
+  if (lanxang_engine->preedit_len < PREEDIT_BUFF_LEN - 1)
+    {
+      lanxang_engine->preedit_str[lanxang_engine->preedit_len++] = new_char;
+      lanxang_engine->preedit_str[lanxang_engine->preedit_len] = 0;
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gunichar
+ibus_lanxang_engine_get_prev_preedit_char (IBusLanXangEngine *lanxang_engine)
+{
+  if (lanxang_engine->preedit_len > 0)
+    return lanxang_engine->preedit_str[lanxang_engine->preedit_len - 1];
+
+  return 0;
+}
+
+static void
+ibus_lanxang_engine_commit_preedit_reversed (IBusLanXangEngine *lanxang_engine)
+{
+  gunichar r_text[PREEDIT_BUFF_LEN];
+  gint     i;
+  IBusText *text;
+
+  ibus_engine_hide_preedit_text (IBUS_ENGINE (lanxang_engine));
+
+  /* prepare reversed text, clearing preedit string */
+  for (i = 0; lanxang_engine->preedit_len > 0; lanxang_engine->preedit_len--)
+    r_text[i++] = lanxang_engine->preedit_str[lanxang_engine->preedit_len - 1];
+  r_text[i] = 0;
+
+  /* commit it */
+  text = ibus_text_new_from_ucs4 (r_text);
+  ibus_engine_commit_text (IBUS_ENGINE (lanxang_engine), text);
+}
+
+static void
+ibus_lanxang_engine_update_preedit (IBusLanXangEngine *lanxang_engine)
+{
+  IBusText *text;
+
+  text = ibus_text_new_from_ucs4 (lanxang_engine->preedit_str);
+  ibus_text_append_attribute(text,
+                             IBUS_ATTR_TYPE_UNDERLINE,
+                             IBUS_ATTR_UNDERLINE_SINGLE,
+                             0, -1);
+
+  ibus_engine_update_preedit_text (IBUS_ENGINE (lanxang_engine),
+                                   text, lanxang_engine->preedit_len, TRUE);
+}
+
+static gunichar
+ibus_lanxang_engine_get_prev_surrounding_char (IBusLanXangEngine *lanxang_engine)
+{
+  if (is_client_support_surrounding (IBUS_ENGINE (lanxang_engine)))
+    {
+      IBusText *surrounding;
+      guint     cursor_pos;
+      guint     anchor_pos;
+      gunichar *u_surrounding;
+      gunichar  ret = 0;
+
+      ibus_engine_get_surrounding_text (IBUS_ENGINE (lanxang_engine),
+                                        &surrounding, &cursor_pos, &anchor_pos);
+      u_surrounding = g_utf8_to_ucs4 (ibus_text_get_text (surrounding), -1,
+                                      NULL, NULL, NULL);
+      if (u_surrounding)
+        {
+          ret = (cursor_pos > 0) ? u_surrounding[cursor_pos - 1] : 0;
+          g_free (u_surrounding);
+        }
+
+      return ret;
+    }
+
+  return 0;
+}
+
+static gboolean
+ibus_lanxang_engine_commit_char_swapped (IBusLanXangEngine *lanxang_engine,
+                                         gunichar new_char)
+{
+  gunichar prev_char;
+  gunichar commit_buff[3];
+  IBusText *commit_text;
+
+  if (is_client_support_surrounding (IBUS_ENGINE (lanxang_engine)))
+    {
+      prev_char = ibus_lanxang_engine_get_prev_surrounding_char (lanxang_engine);
+      ibus_engine_delete_surrounding_text (IBUS_ENGINE (lanxang_engine), -1, 1);
+
+      commit_buff[0] = new_char;
+      commit_buff[1] = prev_char;
+      commit_buff[2] = 0;
+      commit_text = ibus_text_new_from_ucs4 (commit_buff);
+
+      ibus_engine_commit_text (IBUS_ENGINE (lanxang_engine), commit_text);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gboolean
 ibus_lanxang_engine_process_key_event (IBusEngine *engine,
                                        guint       keyval,
                                        guint       keycode,
                                        guint       modifiers)
 {
   IBusLanXangEngine *lanxang_engine = IBUS_LANXANG_ENGINE (engine);
-  gunichar new_char;
+  gunichar new_char, prev_char;
+  LxImAction action;
   IBusText *text;
 
   if (modifiers & IBUS_RELEASE_MASK)
@@ -167,9 +294,71 @@ ibus_lanxang_engine_process_key_event (IBusEngine *engine,
   if (0 == new_char)
     return FALSE;
 
-  text = ibus_text_new_from_unichar (new_char);
+  if (lanxang_engine->is_preedit)
+    {
+      prev_char = ibus_lanxang_engine_get_prev_preedit_char (lanxang_engine);
+      action = lx_im_preedit_action (prev_char, new_char);
+      if (IA_C == action)
+        {
+          ibus_lanxang_engine_append_preedit (lanxang_engine, new_char);
+          ibus_lanxang_engine_commit_preedit_reversed (lanxang_engine);
+          lanxang_engine->is_preedit = FALSE;
+        }
+    }
+  else
+    {
+      prev_char = ibus_lanxang_engine_get_prev_surrounding_char (lanxang_engine);
+      action = lx_im_normal_action (prev_char, new_char);
 
-  ibus_engine_commit_text (engine, text);
+      switch (lanxang_engine->isc_mode)
+        {
+          case ISC_PASSTHROUGH:
+            if (IA_R == action || IA_S == action)
+              action = IA_A;
+            break;
+          case ISC_STRICT:
+            if (IA_S == action)
+              action = IA_R;
+            break;
+          case ISC_BASIC:
+          default:
+            if (IA_S == action)
+              action = IA_A;
+            break;
+        }
+
+      switch (action)
+        {
+          case IA_P:
+            ibus_lanxang_engine_append_preedit (lanxang_engine, new_char);
+            ibus_lanxang_engine_update_preedit (lanxang_engine);
+            lanxang_engine->is_preedit = TRUE;
+            break;
+
+          case IA_A:
+            text = ibus_text_new_from_unichar (new_char);
+            ibus_engine_commit_text (engine, text);
+            break;
+
+          case IA_W:
+            ibus_lanxang_engine_commit_char_swapped (lanxang_engine, new_char);
+            break;
+
+          case IA_R:
+          case IA_S:
+            goto reject_char;
+
+          case IA_C:
+          default:
+            /* shouldn't reach here! */
+            break;
+        }
+    }
+
+  return TRUE;
+
+reject_char:
+  /* gdk_beep() */
   return TRUE;
 }
 

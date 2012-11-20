@@ -22,6 +22,16 @@
 
 #include <ibus.h>
 
+typedef enum _IscMode IscMode;
+
+enum _IscMode
+{
+  ISC_PASSTHROUGH,
+  ISC_BASIC,
+  ISC_STRICT,
+};
+
+
 #define IBUS_TYPE_LANXANG_ENGINE  (ibus_lanxang_engine_get_type())
 #define IBUS_LANXANG_ENGINE(obj) \
           (G_TYPE_CHECK_INSTANCE_CAST ((obj), \
