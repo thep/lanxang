@@ -170,6 +170,26 @@ ibus_lanxang_engine_append_preedit (IBusLanXangEngine *lanxang_engine,
   return FALSE;
 }
 
+/* Return TRUE if preedit text becomes empty */
+static gboolean
+ibus_lanxang_engine_preedit_cut_last (IBusLanXangEngine *lanxang_engine)
+{
+  if (lanxang_engine->preedit_len > 0)
+    {
+      lanxang_engine->preedit_str[--lanxang_engine->preedit_len] = 0;
+      return lanxang_engine->preedit_len == 0;
+    }
+
+  return TRUE;
+}
+
+static void
+ibus_lanxang_engine_preedit_clear (IBusLanXangEngine *lanxang_engine)
+{
+  lanxang_engine->preedit_str[0] = 0;
+  lanxang_engine->preedit_len = 0;
+}
+
 static gunichar
 ibus_lanxang_engine_get_prev_preedit_char (IBusLanXangEngine *lanxang_engine)
 {
@@ -266,6 +286,36 @@ ibus_lanxang_engine_commit_char_swapped (IBusLanXangEngine *lanxang_engine,
   return FALSE;
 }
 
+/* Return TRUE if key is handled */
+static gboolean
+ibus_lanxang_engine_process_preedit_keys (IBusLanXangEngine *lanxang_engine,
+                                          guint keyval,
+                                          guint modifiers)
+{
+  switch (keyval)
+    {
+      case IBUS_BackSpace:
+        if (ibus_lanxang_engine_preedit_cut_last (lanxang_engine))
+          {
+            ibus_engine_hide_preedit_text (IBUS_ENGINE (lanxang_engine));
+            lanxang_engine->is_preedit = FALSE;
+          }
+        else
+          {
+            ibus_lanxang_engine_update_preedit (lanxang_engine);
+          }
+        return TRUE;
+
+      case IBUS_Escape:
+        ibus_lanxang_engine_preedit_clear (lanxang_engine);
+        ibus_engine_hide_preedit_text (IBUS_ENGINE (lanxang_engine));
+        lanxang_engine->is_preedit = FALSE;
+        return TRUE;
+    }
+
+  return FALSE;
+}
+
 static gboolean
 ibus_lanxang_engine_process_key_event (IBusEngine *engine,
                                        guint       keyval,
@@ -279,6 +329,16 @@ ibus_lanxang_engine_process_key_event (IBusEngine *engine,
 
   if (modifiers & IBUS_RELEASE_MASK)
     return FALSE;
+
+  if (lanxang_engine->is_preedit)
+    {
+      /* process editor keys */
+      if (ibus_lanxang_engine_process_preedit_keys (lanxang_engine,
+                                                    keyval, modifiers))
+        {
+          return TRUE;
+        }
+    }
 
   if (modifiers & (IBUS_CONTROL_MASK | IBUS_MOD1_MASK)
       || is_context_lost_key (keyval))
