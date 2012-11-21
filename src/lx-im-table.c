@@ -18,6 +18,7 @@
  */
 
 #include "lx-im-table.h"
+#include <wctype.h>
 
 /*----------------------------*
  *  CHARACTER CLASSIFICATION  *
@@ -77,7 +78,13 @@ static const LxCharClass char_class[144] =
 static LxCharClass
 lx_char_class (gunichar u)
 {
-  return (0x1a20 <= u && u <= 0x1aad) ? char_class[u - 0x1a20] : XC_X;
+  if (0x1a20 <= u && u <= 0x1aad)
+    return char_class[u - 0x1a20];
+
+  if (iswspace (u) || iswpunct (u) || iswdigit (u))
+    return XC_NP;
+
+  return XC_X;
 }
 
 /*-----------------------------*
