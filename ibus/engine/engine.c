@@ -292,25 +292,26 @@ ibus_lanxang_engine_process_preedit_keys (IBusLanXangEngine *lanxang_engine,
                                           guint keyval,
                                           guint modifiers)
 {
-  switch (keyval)
+  if (IBUS_BackSpace == keyval)
     {
-      case IBUS_BackSpace:
-        if (ibus_lanxang_engine_preedit_cut_last (lanxang_engine))
-          {
-            ibus_engine_hide_preedit_text (IBUS_ENGINE (lanxang_engine));
-            lanxang_engine->is_preedit = FALSE;
-          }
-        else
-          {
-            ibus_lanxang_engine_update_preedit (lanxang_engine);
-          }
-        return TRUE;
+      if (ibus_lanxang_engine_preedit_cut_last (lanxang_engine))
+        {
+          ibus_engine_hide_preedit_text (IBUS_ENGINE (lanxang_engine));
+          lanxang_engine->is_preedit = FALSE;
+        }
+      else
+        {
+          ibus_lanxang_engine_update_preedit (lanxang_engine);
+        }
+      return TRUE;
+    }
 
-      case IBUS_Escape:
-        ibus_lanxang_engine_preedit_clear (lanxang_engine);
-        ibus_engine_hide_preedit_text (IBUS_ENGINE (lanxang_engine));
-        lanxang_engine->is_preedit = FALSE;
-        return TRUE;
+  if (is_context_lost_key (keyval))
+    {
+      ibus_lanxang_engine_preedit_clear (lanxang_engine);
+      ibus_engine_hide_preedit_text (IBUS_ENGINE (lanxang_engine));
+      lanxang_engine->is_preedit = FALSE;
+      return FALSE;
     }
 
   return FALSE;
@@ -330,6 +331,9 @@ ibus_lanxang_engine_process_key_event (IBusEngine *engine,
   if (modifiers & IBUS_RELEASE_MASK)
     return FALSE;
 
+  if (modifiers & (IBUS_CONTROL_MASK | IBUS_MOD1_MASK))
+    return FALSE;
+
   if (lanxang_engine->is_preedit)
     {
       /* process editor keys */
@@ -340,15 +344,11 @@ ibus_lanxang_engine_process_key_event (IBusEngine *engine,
         }
     }
 
-  if (modifiers & (IBUS_CONTROL_MASK | IBUS_MOD1_MASK)
-      || is_context_lost_key (keyval))
-    {
-      return FALSE;
-    }
+  if (is_context_lost_key (keyval))
+    return FALSE;
+
   if (0 == keyval || is_context_intact_key (keyval))
-    {
-      return FALSE;
-    }
+    return FALSE;
 
   new_char = lx_map_key (keyval, modifiers & IBUS_MOD5_MASK);
   if (0 == new_char)
