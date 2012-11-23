@@ -1,1 +1,1 @@
-SUBDIRS = engine icons
+SUBDIRS = engine setup icons

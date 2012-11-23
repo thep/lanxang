@@ -31,6 +31,17 @@ ibus_engine_lanxang_LDADD = \
 	$(IBUS_LIBS) \
 	$(GLIB_LIBS) \
 	$(top_builddir)/src/liblanxang.a \
+	libibus-lanxang-config.a \
+	$(NULL)
+
+noinst_LIBRARIES = libibus-lanxang-config.a
+
+libibus_lanxang_config_a_SOURCES = \
+	ibus-config.c \
+	$(NULL)
+
+libibus_lanxang_config_a_CFLAGS = \
+	$(IBUS_CFLAGS) \
 	$(NULL)
 
 component_DATA = lanxang.xml

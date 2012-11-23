@@ -19,6 +19,7 @@
       <layout>us</layout>
       <longname>LanXang</longname>
       <description>Input method for Lao/Esaan Tham script</description>
+      <setup>${libexecdir}/ibus-setup-lanxang</setup>
       <rank>0</rank>
     </engine>
   </engines>

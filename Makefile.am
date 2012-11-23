@@ -1,1 +1,1 @@
-SUBDIRS = src ibus
+SUBDIRS = src ibus po

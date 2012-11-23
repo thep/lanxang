@@ -24,6 +24,7 @@
 #include "engine.h"
 #include "lx-kbd.h"
 #include "lx-im-table.h"
+#include "ibus-config.h"
 #include <glib.h>
 #include <string.h>
 
@@ -108,10 +109,15 @@ ibus_lanxang_engine_class_init (IBusLanXangEngineClass *klass)
 static void
 ibus_lanxang_engine_init (IBusLanXangEngine *lanxang_engine)
 {
+  IBusLanXangSetupOptions opt;
+
   lanxang_engine->is_preedit = FALSE;
   lanxang_engine->preedit_str[0] = 0;
   lanxang_engine->preedit_len = 0;
-  lanxang_engine->isc_mode = ISC_BASIC;
+
+  /* Read config */
+  ibus_lanxang_read_config (ibus_config, &opt);
+  lanxang_engine->isc_mode = opt.isc_mode;
 }
 
 static gboolean
