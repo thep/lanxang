@@ -117,7 +117,7 @@ static LxImAction normal_action[XC_TOTAL][XC_TOTAL] =
   /*C2*/  R, P, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A,
   /*PH*/  R, P, R, R, R, R, R, R, R, R, R, A, R, R, R, R, R, R, R, R,
   /*S1*/  R, P, A, A, A, A, A, A, A, A, A, A, A, A, R, R, A, A, A, A,
-  /*S2*/  R, P, A, A, A, A, S, A, A, A, A, A, A, S, R, R, A, A, A, A,
+  /*S2*/  R, P, A, A, A, A, S, A, A, A, A, A, A, A, R, R, A, A, A, A,
   /*T*/   R, P, R, R, R, R, R, A, A, A, A, A, A, A, R, R, R, A, A, A,
   /*LG*/  R, P, R, R, R, R, R, A, R, R, A, A, A, A, R, R, A, A, A, A,
   /*CR*/  R, P, A, A, A, A, A, A, A, A, A, A, A, S, A, A, A, A, A, A,
