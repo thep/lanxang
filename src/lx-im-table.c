@@ -58,7 +58,7 @@ enum _LxCharClass
   XC_X,    /* Undefined */
   XC_LV,   /* Leading Vowels */
   XC_AV,   /* Above Vowels (I, II, UE, UEE, KONG, KAO HO NUENG) */
-  XC_AD1,  /* Above Diacritics 1 (MAI SAD, MAI ANG LAN) */
+  XC_AD1,  /* Above Diacritics 1 (MAI SAT, MAI ANG LAN, FINAL NGA) */
   XC_AD2,  /* Above Diacritics 2 (NIKHAHIT) */
   XC_BV1,  /* Below Vowels 1 (U, UU) */
   XC_BV2,  /* Below Vowels 2 (AU BELOW) */
@@ -89,7 +89,7 @@ static const LxCharClass char_class[144] =
   XC_C2 , XC_C2 , XC_IV , XC_C2 , XC_IV , XC_C1 , XC_C1 , XC_C1 , /* 0x1A40 */
   XC_C1 , XC_C1 , XC_C2 , XC_C2 , XC_C2 , XC_IV , XC_IV , XC_IV , /* 0x1A48 */
   XC_IV , XC_IV , XC_IV , XC_LG , XC_C2 , XC_S1 , XC_S2 , XC_S2 , /* 0x1A50 */
-  XC_X  , XC_AD1, XC_X  , XC_X  , XC_X  , XC_X  , XC_X  , XC_X  , /* 0x1A58 */
+  XC_AD1, XC_AD1, XC_X  , XC_X  , XC_X  , XC_X  , XC_X  , XC_X  , /* 0x1A58 */
   XC_PH , XC_FV1, XC_AD1, XC_FV2, XC_FV2, XC_AV , XC_AV , XC_AV , /* 0x1A60 */
   XC_AV , XC_BV1, XC_BV1, XC_AV , XC_BV2, XC_FV3, XC_LV , XC_LV , /* 0x1A68 */
   XC_LV , XC_LV , XC_LV , XC_AV , XC_AD2, XC_T  , XC_T  , XC_X  , /* 0x1A70 */
