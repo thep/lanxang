@@ -28,6 +28,8 @@
 #include <glib.h>
 #include <string.h>
 
+#define N_ELM(ar)  (sizeof(ar)/sizeof((ar)[0]))
+
 typedef struct _IBusLanXangEngine IBusLanXangEngine;
 typedef struct _IBusLanXangEngineClass IBusLanXangEngineClass;
 
@@ -166,11 +168,34 @@ static gboolean
 ibus_lanxang_engine_append_preedit (IBusLanXangEngine *lanxang_engine,
                                     gunichar new_char)
 {
-  if (lanxang_engine->preedit_len < PREEDIT_BUFF_LEN - 1)
+  if (lx_is_pua (new_char))
     {
-      lanxang_engine->preedit_str[lanxang_engine->preedit_len++] = new_char;
-      lanxang_engine->preedit_str[lanxang_engine->preedit_len] = 0;
-      return TRUE;
+      gunichar new_text[8];
+      gint     len, i;
+
+      len = lx_get_pua_text (new_char, new_text, N_ELM (new_text));
+      if (0 == len)
+        return FALSE;
+
+      if (lanxang_engine->preedit_len < PREEDIT_BUFF_LEN - len)
+        {
+          for (i = 0; i < len; i++)
+            {
+              lanxang_engine->preedit_str[lanxang_engine->preedit_len++]
+                = new_text[i];
+            }
+          lanxang_engine->preedit_str[lanxang_engine->preedit_len] = 0;
+          return TRUE;
+        }
+    }
+  else
+    {
+      if (lanxang_engine->preedit_len < PREEDIT_BUFF_LEN - 1)
+        {
+          lanxang_engine->preedit_str[lanxang_engine->preedit_len++] = new_char;
+          lanxang_engine->preedit_str[lanxang_engine->preedit_len] = 0;
+          return TRUE;
+        }
     }
 
   return FALSE;
@@ -267,21 +292,55 @@ ibus_lanxang_engine_get_prev_surrounding_char (IBusLanXangEngine *lanxang_engine
 }
 
 static gboolean
+ibus_lanxang_engine_commit_char (IBusLanXangEngine *lanxang_engine,
+                                 gunichar new_char)
+{
+  IBusText *text;
+
+  /* Private-Use-Area char? */
+  if (lx_is_pua (new_char))
+    {
+      gunichar new_text[8];
+      if (!lx_get_pua_text (new_char, new_text, N_ELM (new_text)))
+        return FALSE;
+      text = ibus_text_new_from_ucs4 (new_text);
+    }
+  else
+    {
+      text = ibus_text_new_from_unichar (new_char);
+    }
+
+  ibus_engine_commit_text (lanxang_engine, text);
+
+  g_object_unref (G_OBJECT (text));
+  return TRUE;
+}
+
+static gboolean
 ibus_lanxang_engine_commit_char_swapped (IBusLanXangEngine *lanxang_engine,
                                          gunichar new_char)
 {
   gunichar prev_char;
-  gunichar commit_buff[3];
+  gunichar commit_buff[10];
   IBusText *commit_text;
+  gint     len;
 
   if (is_client_support_surrounding (IBUS_ENGINE (lanxang_engine)))
     {
       prev_char = ibus_lanxang_engine_get_prev_surrounding_char (lanxang_engine);
       ibus_engine_delete_surrounding_text (IBUS_ENGINE (lanxang_engine), -1, 1);
 
-      commit_buff[0] = new_char;
-      commit_buff[1] = prev_char;
-      commit_buff[2] = 0;
+      if (lx_is_pua (new_char))
+        {
+          len = lx_get_pua_text (new_char, commit_buff, N_ELM (commit_buff));
+        }
+      else
+        {
+          commit_buff[0] = new_char;
+          len = 1;
+        }
+      commit_buff[len++] = prev_char;
+      commit_buff[len] = 0;
       commit_text = ibus_text_new_from_ucs4 (commit_buff);
 
       ibus_engine_commit_text (IBUS_ENGINE (lanxang_engine), commit_text);
@@ -332,7 +391,6 @@ ibus_lanxang_engine_process_key_event (IBusEngine *engine,
   IBusLanXangEngine *lanxang_engine = IBUS_LANXANG_ENGINE (engine);
   gunichar new_char, prev_char;
   LxImAction action;
-  IBusText *text;
 
   if (modifiers & IBUS_RELEASE_MASK)
     return FALSE;
@@ -402,8 +460,8 @@ ibus_lanxang_engine_process_key_event (IBusEngine *engine,
             break;
 
           case IA_A:
-            text = ibus_text_new_from_unichar (new_char);
-            ibus_engine_commit_text (engine, text);
+            if (!ibus_lanxang_engine_commit_char (lanxang_engine, new_char))
+              goto reject_char;
             break;
 
           case IA_W:

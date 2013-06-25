@@ -20,6 +20,33 @@
 #include "lx-im-table.h"
 #include <wctype.h>
 
+/*--------------------------*
+ *  PRIVATE USE CHARACTERS  *
+ *--------------------------*/
+
+gboolean
+lx_is_pua (gunichar uc)
+{
+ return uc & 0x10000;
+}
+
+gint
+lx_get_pua_text (gunichar uc, gunichar *out_text, int out_text_nelm)
+{
+  switch (uc)
+    {
+      case LX_PUA_VOWEL_AM:
+        if (out_text_nelm < 3)
+          return 0;
+        out_text[0] = 0x1a63;
+        out_text[1] = 0x1a74;
+        out_text[2] = 0;
+        return 2;
+    }
+
+  return 0;
+}
+
 /*----------------------------*
  *  CHARACTER CLASSIFICATION  *
  *----------------------------*/
@@ -36,7 +63,7 @@ enum _LxCharClass
   XC_BV1,  /* Below Vowels 1 (U, UU) */
   XC_BV2,  /* Below Vowels 2 (AU BELOW) */
   XC_FV1,  /* Folowing Vowels 1 (A) */
-  XC_FV2,  /* Folowing Vowels 2 (AA, TALL AA) */
+  XC_FV2,  /* Folowing Vowels 2 (AA, TALL AA, AM) */
   XC_FV3,  /* Folowing Vowels 3 (OY) */
   XC_IV,   /* Independent Vowels (RU, LU, I, II, U, UU, E, O) */
   XC_C1,   /* Consonants 1 (Other Consonants) */
@@ -83,6 +110,12 @@ lx_char_class (gunichar u)
 
   if (iswspace (u) || iswpunct (u) || iswdigit (u))
     return XC_NP;
+
+  if (lx_is_pua (u))
+    {
+      if (LX_PUA_VOWEL_AM == u)
+        return XC_FV2;
+    }
 
   return XC_X;
 }

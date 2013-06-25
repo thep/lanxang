@@ -22,6 +22,13 @@
 
 #include <glib.h>
 
+#define LX_PUA_VOWEL_AM  0x10001
+
+/* PUA internal use */
+gboolean lx_is_pua (gunichar uc);
+/* returns out text len */
+gint lx_get_pua_text (gunichar uc, gunichar *out_text, int out_text_nelm);
+
 typedef enum _LxImAction LxImAction;
 
 /*
