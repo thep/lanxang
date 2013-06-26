@@ -72,6 +72,7 @@ enum _LxCharClass
   XC_PH,   /* Phinthu (SAKOT) */
   XC_S1,   /* Subjoins 1 (MEDIAL RA) */
   XC_S2,   /* Subjoins 2 (MEDIAL LA, LA TANG LAI) */
+  XC_S3,   /* Subjoins 3 (DOUBLE DOT BELOW) */
   XC_T,    /* Tones */
   XC_LG,   /* Ligatures (LAE) */
   XC_CR,   /* Cryptograms (CRYPTOGRAMMIC DOT) */
@@ -117,6 +118,10 @@ lx_char_class (gunichar u)
         return XC_FV2;
     }
 
+  /* DOUBLE DOT BELOW */
+  if (0x0324 == u)
+    return XC_S3;
+
   return XC_X;
 }
 
@@ -132,29 +137,30 @@ static LxImAction normal_action[XC_TOTAL][XC_TOTAL] =
 #define R IA_R
 #define S IA_S
 #define C IA_C
-       /* X, L, A, A, A, B, B, F, F, F, I, C, C, P, S, S, T, L, C, N */
-       /*  , V, V, D, D, V, V, V, V, V, V, 1, 2, H, 1, 2,  , G, R, P */
-       /*  ,  ,  , 1, 2, 1, 2, 1, 2, 3,  ,  ,  ,  ,  ,  ,  ,  ,  ,   */
-  /*X*/   R, P, R, R, R, R, R, R, R, R, A, A, A, R, R, R, R, A, R, A,
-  /*LV*/  R, P, A, A, S, S, S, A, A, S, A, A, A, A, W, A, A, A, A, A,
-  /*AV*/  R, P, R, R, A, R, A, S, A, S, A, A, A, A, R, A, A, A, A, A,
-  /*AD1*/ R, P, R, R, R, R, R, S, S, S, A, A, A, A, R, A, A, A, A, A,
-  /*AD2*/ R, P, R, R, R, R, R, S, A, S, A, A, A, S, R, R, A, A, R, A,
-  /*BV1*/ R, P, S, A, A, R, R, S, S, S, A, A, A, S, A, R, A, A, R, A,
-  /*BV2*/ R, P, R, A, R, R, R, A, R, R, R, A, A, S, R, R, A, A, R, A,
-  /*FV1*/ R, P, R, R, R, R, R, R, R, R, A, A, A, R, R, R, R, A, R, A,
-  /*FV2*/ R, P, R, A, R, R, R, A, R, R, A, A, A, A, R, A, R, A, A, A,
-  /*FV3*/ R, P, R, R, R, R, R, R, R, R, A, A, A, R, R, R, R, A, R, A,
-  /*IV*/  R, P, A, R, R, R, R, R, R, R, R, A, A, R, R, R, R, A, R, A,
-  /*C1*/  R, P, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A,
-  /*C2*/  R, P, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A,
-  /*PH*/  R, P, R, R, R, R, R, R, R, R, R, A, R, R, R, R, R, R, R, R,
-  /*S1*/  R, P, A, A, A, A, A, A, A, A, A, A, A, A, R, R, A, A, A, A,
-  /*S2*/  R, P, A, A, A, A, S, A, A, A, A, A, A, A, R, R, A, A, A, A,
-  /*T*/   R, P, R, R, R, R, R, A, A, A, A, A, A, A, R, R, R, A, A, A,
-  /*LG*/  R, P, R, R, R, R, R, A, R, R, A, A, A, A, R, R, A, A, A, A,
-  /*CR*/  R, P, A, A, A, A, A, A, A, A, A, A, A, S, A, A, A, A, A, A,
-  /*NP*/  R, P, R, R, R, R, R, R, R, R, A, A, A, R, R, R, R, A, R, A,
+       /* X, L, A, A, A, B, B, F, F, F, I, C, C, P, S, S, S, T, L, C, N */
+       /*  , V, V, D, D, V, V, V, V, V, V, 1, 2, H, 1, 2, 3,  , G, R, P */
+       /*  ,  ,  , 1, 2, 1, 2, 1, 2, 3,  ,  ,  ,  ,  ,  ,  ,  ,  ,  ,   */
+  /*X*/   R, P, R, R, R, R, R, R, R, R, A, A, A, R, R, R, R, R, A, R, A,
+  /*LV*/  R, P, A, A, S, S, S, A, A, S, A, A, A, A, W, A, A, A, A, A, A,
+  /*AV*/  R, P, R, R, A, R, A, S, A, S, A, A, A, A, R, A, A, A, A, A, A,
+  /*AD1*/ R, P, R, R, R, R, R, S, S, S, A, A, A, A, R, A, A, A, A, A, A,
+  /*AD2*/ R, P, R, R, R, R, R, S, A, S, A, A, A, S, R, R, R, A, A, R, A,
+  /*BV1*/ R, P, S, A, A, R, R, S, S, S, A, A, A, S, A, R, R, A, A, R, A,
+  /*BV2*/ R, P, R, A, R, R, R, A, R, R, R, A, A, S, R, R, R, A, A, R, A,
+  /*FV1*/ R, P, R, R, R, R, R, R, R, R, A, A, A, R, R, R, R, R, A, R, A,
+  /*FV2*/ R, P, R, A, R, R, R, A, R, R, A, A, A, A, R, A, A, R, A, A, A,
+  /*FV3*/ R, P, R, R, R, R, R, R, R, R, A, A, A, R, R, R, R, R, A, R, A,
+  /*IV*/  R, P, A, R, R, R, R, R, R, R, R, A, A, R, R, R, R, R, A, R, A,
+  /*C1*/  R, P, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A,
+  /*C2*/  R, P, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A,
+  /*PH*/  R, P, R, R, R, R, R, R, R, R, R, A, R, R, R, R, R, R, R, R, R,
+  /*S1*/  R, P, A, A, A, A, A, A, A, A, A, A, A, A, R, R, S, A, A, A, A,
+  /*S2*/  R, P, A, A, A, A, S, A, A, A, A, A, A, A, R, R, S, A, A, A, A,
+  /*S3*/  R, P, R, R, R, R, R, R, R, R, A, A, A, R, R, R, R, R, A, R, A,
+  /*T*/   R, P, R, R, R, R, R, A, A, A, A, A, A, A, R, R, A, R, A, A, A,
+  /*LG*/  R, P, R, R, R, R, R, A, R, R, A, A, A, A, R, R, A, A, A, A, A,
+  /*CR*/  R, P, A, A, A, A, A, A, A, A, A, A, A, S, A, A, R, A, A, A, A,
+  /*NP*/  R, P, R, R, R, R, R, R, R, R, A, A, A, R, R, R, R, R, A, R, A,
 #undef P
 #undef A
 #undef W
