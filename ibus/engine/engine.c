@@ -310,7 +310,7 @@ ibus_lanxang_engine_commit_char (IBusLanXangEngine *lanxang_engine,
       text = ibus_text_new_from_unichar (new_char);
     }
 
-  ibus_engine_commit_text (lanxang_engine, text);
+  ibus_engine_commit_text (IBUS_ENGINE (lanxang_engine), text);
 
   g_object_unref (G_OBJECT (text));
   return TRUE;
