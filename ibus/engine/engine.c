@@ -312,7 +312,6 @@ ibus_lanxang_engine_commit_char (IBusLanXangEngine *lanxang_engine,
 
   ibus_engine_commit_text (IBUS_ENGINE (lanxang_engine), text);
 
-  g_object_unref (G_OBJECT (text));
   return TRUE;
 }
 
