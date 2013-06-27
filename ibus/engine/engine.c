@@ -388,6 +388,7 @@ ibus_lanxang_engine_process_key_event (IBusEngine *engine,
                                        guint       modifiers)
 {
   IBusLanXangEngine *lanxang_engine = IBUS_LANXANG_ENGINE (engine);
+  gint shift_lv;
   gunichar new_char, prev_char;
   LxImAction action;
 
@@ -413,7 +414,9 @@ ibus_lanxang_engine_process_key_event (IBusEngine *engine,
   if (0 == keyval || is_context_intact_key (keyval))
     return FALSE;
 
-  new_char = lx_map_key (keyval, modifiers & IBUS_MOD5_MASK);
+  shift_lv = !(modifiers & (IBUS_SHIFT_MASK | IBUS_MOD5_MASK)) ? 0
+               : ((modifiers & IBUS_MOD5_MASK) ? 2 : 1);
+  new_char = lx_map_keycode (keycode, shift_lv);
   if (0 == new_char)
     return FALSE;
 

@@ -23,6 +23,7 @@
 #include <glib.h>
 
 gunichar lx_map_key (guint keyval, gboolean is_lv3);
+gunichar lx_map_keycode (guint keycode, gint shift_lv);
 
 #endif /* __LX_KBD_H__ */
 
