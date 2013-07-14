@@ -23,12 +23,12 @@
 #include "ibus-config.h"
 #include <gtk/gtk.h>
 
-GtkWidget *ibus_lanxang_setup_dialog_new ();
+GtkWidget *ibus_lanxang_tham_setup_dialog_new ();
 
-void ibus_lanxang_setup_set_values (const GtkDialog *dlg,
-                                    const IBusLanXangSetupOptions *opt);
-void ibus_lanxang_setup_get_values (const GtkDialog *dlg,
-                                    IBusLanXangSetupOptions *opt);
+void ibus_lanxang_tham_setup_set_values (const GtkDialog *dlg,
+                                         const IBusLanXangSetupOptions *opt);
+void ibus_lanxang_tham_setup_get_values (const GtkDialog *dlg,
+                                         IBusLanXangSetupOptions *opt);
 
 #endif /* __THAM_DLG_SETUP_H__ */
 

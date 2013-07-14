@@ -44,7 +44,7 @@ static const GOptionEntry entries[] =
 };
 
 static void
-ibus_lanxang_disconnected_cb (IBusBus* bus, gpointer user_data)
+ibus_lanxang_tham_disconnected_cb (IBusBus* bus, gpointer user_data)
 {
   exit(2);
 }
@@ -87,22 +87,22 @@ main (int argc, char **argv)
 
   gtk_window_set_default_icon_from_file (PKGDATADIR"/icons/ibus-lanxang-tham.svg",
                                          NULL);
-  main_dlg = ibus_lanxang_setup_dialog_new ();
+  main_dlg = ibus_lanxang_tham_setup_dialog_new ();
   g_signal_connect (main_dlg, "destroy", gtk_main_quit, NULL);
 
   ibus_init ();
   bus = ibus_bus_new ();
   g_signal_connect (bus, "disconnected",
-                    G_CALLBACK (ibus_lanxang_disconnected_cb), NULL);
+                    G_CALLBACK (ibus_lanxang_tham_disconnected_cb), NULL);
   config = ibus_bus_get_config (bus);
 
   ibus_lanxang_read_config (config, &opt);
-  ibus_lanxang_setup_set_values (GTK_DIALOG (main_dlg), &opt);
+  ibus_lanxang_tham_setup_set_values (GTK_DIALOG (main_dlg), &opt);
 
   ret = gtk_dialog_run (GTK_DIALOG (main_dlg));
   if (GTK_RESPONSE_OK == ret)
     {
-      ibus_lanxang_setup_get_values (GTK_DIALOG (main_dlg), &opt);
+      ibus_lanxang_tham_setup_get_values (GTK_DIALOG (main_dlg), &opt);
       ibus_lanxang_write_config (config, &opt);
       if (!opt_engine)
         {

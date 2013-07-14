@@ -25,7 +25,7 @@
 #define WIDGET_MARGINS 12
 
 GtkWidget *
-ibus_lanxang_setup_dialog_new ()
+ibus_lanxang_tham_setup_dialog_new ()
 {
   GtkWidget *main_dlg;
   GtkWidget *main_vbox;
@@ -105,8 +105,8 @@ ibus_lanxang_setup_dialog_new ()
 }
 
 void
-ibus_lanxang_setup_set_values (const GtkDialog *dlg,
-                               const IBusLanXangSetupOptions *opt)
+ibus_lanxang_tham_setup_set_values (const GtkDialog *dlg,
+                                    const IBusLanXangSetupOptions *opt)
 {
   GtkWidget *widget;
 
@@ -128,8 +128,8 @@ ibus_lanxang_setup_set_values (const GtkDialog *dlg,
 }
 
 void
-ibus_lanxang_setup_get_values (const GtkDialog *dlg,
-                               IBusLanXangSetupOptions *opt)
+ibus_lanxang_tham_setup_get_values (const GtkDialog *dlg,
+                                    IBusLanXangSetupOptions *opt)
 {
   GtkWidget *widget;
 
