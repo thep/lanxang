@@ -18,7 +18,7 @@
  */
 
 #include <libintl.h>
-#include "dlg-setup.h"
+#include "tham-dlg-setup.h"
 
 #define _(string) gettext(string)
 
@@ -35,7 +35,7 @@ ibus_lanxang_setup_dialog_new ()
   GtkRadioButton *last_radio;
 
   /* Create main window */
-  main_dlg = gtk_dialog_new_with_buttons (_("IBus LanXang Preferences"),
+  main_dlg = gtk_dialog_new_with_buttons (_("IBus LanXang Tham Preferences"),
                                           NULL, GTK_DIALOG_MODAL,
                                           GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                           GTK_STOCK_OK, GTK_RESPONSE_OK,

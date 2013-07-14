@@ -1,2 +1,2 @@
-ibus/setup/dlg-setup.c
-ibus/setup/setup.c
+ibus/setup/tham-dlg-setup.c
+ibus/setup/tham-setup.c

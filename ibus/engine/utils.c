@@ -44,12 +44,12 @@ ibus_lanxang_get_component ()
                                       "ibus-lanxang");
       ibus_component_add_engine (component,
                                  ibus_engine_desc_new ("lanxang",
-                                                       "LanXang",
+                                                       "LanXang Tham",
                                                        "Input method for Lao/Esaan Tham script",
                                                        "lana",
                                                        "GPL",
                                                        "Theppitak Karoonboonyanan <thep@linux.thai.net>",
-                                                       PKGDATADIR"/icons/ibus-lanxang.svg",
+                                                       PKGDATADIR"/icons/ibus-lanxang-tham.svg",
                                                        "us"));
     }
 

@@ -27,7 +27,7 @@
 #include <ibus.h>
 #include <stdlib.h>
 #include "ibus-config.h"
-#include "dlg-setup.h"
+#include "tham-dlg-setup.h"
 
 #define _(string) gettext(string)
 
@@ -65,7 +65,7 @@ main (int argc, char **argv)
   bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
   textdomain (GETTEXT_PACKAGE);
 
-  context = g_option_context_new ("- ibus lanxang setup component");
+  context = g_option_context_new ("- ibus lanxang Tham setup component");
   g_option_context_add_main_entries (context, entries, "ibus-lanxang");
   g_option_context_parse (context, &argc, &argv, &error);
 
@@ -85,7 +85,7 @@ main (int argc, char **argv)
 
   gtk_init (&argc, &argv);
 
-  gtk_window_set_default_icon_from_file (PKGDATADIR"/icons/ibus-lanxang.svg",
+  gtk_window_set_default_icon_from_file (PKGDATADIR"/icons/ibus-lanxang-tham.svg",
                                          NULL);
   main_dlg = ibus_lanxang_setup_dialog_new ();
   g_signal_connect (main_dlg, "destroy", gtk_main_quit, NULL);

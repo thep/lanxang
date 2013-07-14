@@ -4,24 +4,24 @@ AM_CPPFLAGS = \
 	-DPKGDATADIR=\"$(pkgdatadir)\" \
 	$(NULL)
 
-libexec_PROGRAMS = ibus-setup-lanxang
+libexec_PROGRAMS = ibus-setup-lanxang-tham
 
-ibus_setup_lanxang_SOURCES = \
-	setup.c \
-	dlg-setup.c \
+ibus_setup_lanxang_tham_SOURCES = \
+	tham-setup.c \
+	tham-dlg-setup.c \
 	$(NULL)
 
 noinst_HEADERS = \
-	dlg-setup.h \
+	tham-dlg-setup.h \
 	$(NULL)
 
-ibus_setup_lanxang_CFLAGS = \
+ibus_setup_lanxang_tham_CFLAGS = \
 	$(IBUS_CFLAGS)  \
 	$(GTK_CFLAGS) \
 	-I$(top_srcdir)/ibus/engine \
 	$(NULL)
 
-ibus_setup_lanxang_LDADD = \
+ibus_setup_lanxang_tham_LDADD = \
 	$(IBUS_LIBS) \
 	$(GTK_LIBS) \
 	$(top_builddir)/ibus/engine/libibus-lanxang-config.a \

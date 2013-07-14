@@ -17,8 +17,8 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 
-#ifndef __DLG_SETUP_H__
-#define __DLG_SETUP_H__
+#ifndef __THAM_DLG_SETUP_H__
+#define __THAM_DLG_SETUP_H__
 
 #include "ibus-config.h"
 #include <gtk/gtk.h>
@@ -30,7 +30,7 @@ void ibus_lanxang_setup_set_values (const GtkDialog *dlg,
 void ibus_lanxang_setup_get_values (const GtkDialog *dlg,
                                     IBusLanXangSetupOptions *opt);
 
-#endif /* __DLG_SETUP_H__ */
+#endif /* __THAM_DLG_SETUP_H__ */
 
 /*
 vi:ts=2:nowrap:ai:expandtab

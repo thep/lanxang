@@ -1,5 +1,5 @@
 icons_DATA = \
-	ibus-lanxang.svg \
+	ibus-lanxang-tham.svg \
 	$(NULL)
 
 iconsdir = $(pkgdatadir)/icons

@@ -8,18 +8,18 @@
   <license>GPL</license>
   <author>Theppitak Karoonboonyanan &lt;thep@linux.thai.net&gt;</author>
   <homepage>http://github.com/thep/lanxang</homepage>
-  <textdomain>ibus-lanxang</textdomain>
+  <textdomain>lanxang</textdomain>
   <engines>
     <engine>
       <name>lanxang</name>
       <language>lana</language>
       <license>GPL</license>
       <author>Theppitak Karoonboonyanan &lt;thep@linux.thai.net&gt;</author>
-      <icon>${pkgdatadir}/icons/ibus-lanxang.svg</icon>
+      <icon>${pkgdatadir}/icons/ibus-lanxang-tham.svg</icon>
       <layout>us</layout>
-      <longname>LanXang</longname>
+      <longname>LanXang Tham</longname>
       <description>Input method for Lao/Esaan Tham script</description>
-      <setup>${libexecdir}/ibus-setup-lanxang</setup>
+      <setup>${libexecdir}/ibus-setup-lanxang-tham</setup>
       <rank>0</rank>
     </engine>
   </engines>
