@@ -17,15 +17,37 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 
-#ifndef __LX_KBD_H__
-#define __LX_KBD_H__
+#ifndef __LX_THAM_IM_TABLE_H__
+#define __LX_THAM_IM_TABLE_H__
 
 #include <glib.h>
 
-gunichar lx_map_key (guint keyval, gboolean is_lv3);
-gunichar lx_map_keycode (guint keycode, gint shift_lv);
+#define LX_THAM_PUA_VOWEL_AM  0x10001
 
-#endif /* __LX_KBD_H__ */
+/* PUA internal use */
+gboolean lx_tham_is_pua (gunichar uc);
+/* returns out text len */
+gint lx_tham_get_pua_text (gunichar uc, gunichar *out_text, int out_text_nelm);
+
+typedef enum _LxThamImAction LxThamImAction;
+
+/*
+ * IM actions
+ */
+enum _LxThamImAction
+{
+  IA_P,  /* Enter pre-edit mode */
+  IA_A,  /* Accept the input character */
+  IA_W,  /* Accept the input character and swap it with previous character */
+  IA_R,  /* Reject the input character */
+  IA_S,  /* Reject the input character in strict mode, accept it otherwise */
+  IA_C,  /* Commit the pre-edit string */
+};
+
+LxThamImAction lx_tham_im_normal_action (gunichar prev_c, gunichar input_c);
+LxThamImAction lx_tham_im_preedit_action (gunichar prev_c, gunichar input_c);
+
+#endif /* __LX_THAM_IM_TABLE_H__ */
 
 /*
 vi:ts=2:nowrap:ai:expandtab

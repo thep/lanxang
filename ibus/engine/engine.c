@@ -22,8 +22,8 @@
 #endif
 
 #include "engine.h"
-#include "lx-kbd.h"
-#include "lx-im-table.h"
+#include "lx-tham-kbd.h"
+#include "lx-tham-im-table.h"
 #include "ibus-config.h"
 #include <glib.h>
 #include <string.h>
@@ -168,12 +168,12 @@ static gboolean
 ibus_lanxang_engine_append_preedit (IBusLanXangEngine *lanxang_engine,
                                     gunichar new_char)
 {
-  if (lx_is_pua (new_char))
+  if (lx_tham_is_pua (new_char))
     {
       gunichar new_text[8];
       gint     len, i;
 
-      len = lx_get_pua_text (new_char, new_text, N_ELM (new_text));
+      len = lx_tham_get_pua_text (new_char, new_text, N_ELM (new_text));
       if (0 == len)
         return FALSE;
 
@@ -298,10 +298,10 @@ ibus_lanxang_engine_commit_char (IBusLanXangEngine *lanxang_engine,
   IBusText *text;
 
   /* Private-Use-Area char? */
-  if (lx_is_pua (new_char))
+  if (lx_tham_is_pua (new_char))
     {
       gunichar new_text[8];
-      if (!lx_get_pua_text (new_char, new_text, N_ELM (new_text)))
+      if (!lx_tham_get_pua_text (new_char, new_text, N_ELM (new_text)))
         return FALSE;
       text = ibus_text_new_from_ucs4 (new_text);
     }
@@ -329,9 +329,9 @@ ibus_lanxang_engine_commit_char_swapped (IBusLanXangEngine *lanxang_engine,
       prev_char = ibus_lanxang_engine_get_prev_surrounding_char (lanxang_engine);
       ibus_engine_delete_surrounding_text (IBUS_ENGINE (lanxang_engine), -1, 1);
 
-      if (lx_is_pua (new_char))
+      if (lx_tham_is_pua (new_char))
         {
-          len = lx_get_pua_text (new_char, commit_buff, N_ELM (commit_buff));
+          len = lx_tham_get_pua_text (new_char, commit_buff, N_ELM (commit_buff));
         }
       else
         {
@@ -390,7 +390,7 @@ ibus_lanxang_engine_process_key_event (IBusEngine *engine,
   IBusLanXangEngine *lanxang_engine = IBUS_LANXANG_ENGINE (engine);
   gint shift_lv;
   gunichar new_char, prev_char;
-  LxImAction action;
+  LxThamImAction action;
 
   if (modifiers & IBUS_RELEASE_MASK)
     return FALSE;
@@ -416,14 +416,14 @@ ibus_lanxang_engine_process_key_event (IBusEngine *engine,
 
   shift_lv = !(modifiers & (IBUS_SHIFT_MASK | IBUS_MOD5_MASK)) ? 0
                : ((modifiers & IBUS_MOD5_MASK) ? 2 : 1);
-  new_char = lx_map_keycode (keycode, shift_lv);
+  new_char = lx_tham_map_keycode (keycode, shift_lv);
   if (0 == new_char)
     return FALSE;
 
   if (lanxang_engine->is_preedit)
     {
       prev_char = ibus_lanxang_engine_get_prev_preedit_char (lanxang_engine);
-      action = lx_im_preedit_action (prev_char, new_char);
+      action = lx_tham_im_preedit_action (prev_char, new_char);
       if (IA_C == action)
         {
           ibus_lanxang_engine_append_preedit (lanxang_engine, new_char);
@@ -434,7 +434,7 @@ ibus_lanxang_engine_process_key_event (IBusEngine *engine,
   else
     {
       prev_char = ibus_lanxang_engine_get_prev_surrounding_char (lanxang_engine);
-      action = lx_im_normal_action (prev_char, new_char);
+      action = lx_tham_im_normal_action (prev_char, new_char);
 
       switch (lanxang_engine->isc_mode)
         {

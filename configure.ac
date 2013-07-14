@@ -4,7 +4,7 @@
 AC_PREREQ([2.69])
 AC_INIT([lanxang], [0.1.0], [esaan-scripts-wg@googlegroups.com])
 AM_INIT_AUTOMAKE([1.10])
-AC_CONFIG_SRCDIR([src/lx-kbd.c])
+AC_CONFIG_SRCDIR([src/lx-tham-kbd.c])
 AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs.

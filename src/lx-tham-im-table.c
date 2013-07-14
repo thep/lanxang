@@ -17,7 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 
-#include "lx-im-table.h"
+#include "lx-tham-im-table.h"
 #include <wctype.h>
 
 /*--------------------------*
@@ -25,17 +25,17 @@
  *--------------------------*/
 
 gboolean
-lx_is_pua (gunichar uc)
+lx_tham_is_pua (gunichar uc)
 {
  return uc & 0x10000;
 }
 
 gint
-lx_get_pua_text (gunichar uc, gunichar *out_text, int out_text_nelm)
+lx_tham_get_pua_text (gunichar uc, gunichar *out_text, int out_text_nelm)
 {
   switch (uc)
     {
-      case LX_PUA_VOWEL_AM:
+      case LX_THAM_PUA_VOWEL_AM:
         if (out_text_nelm < 3)
           return 0;
         out_text[0] = 0x1a63;
@@ -51,9 +51,9 @@ lx_get_pua_text (gunichar uc, gunichar *out_text, int out_text_nelm)
  *  CHARACTER CLASSIFICATION  *
  *----------------------------*/
 
-typedef enum _LxCharClass LxCharClass;
+typedef enum _LxThamCharClass LxThamCharClass;
 
-enum _LxCharClass
+enum _LxThamCharClass
 {
   XC_X,    /* Undefined */
   XC_LV,   /* Leading Vowels */
@@ -81,7 +81,7 @@ enum _LxCharClass
   XC_TOTAL, /* Character class count (not a class) */
 };
 
-static const LxCharClass char_class[144] =
+static const LxThamCharClass char_class[144] =
 {
   XC_C1 , XC_C1 , XC_C2 , XC_C1 , XC_C2 , XC_C1 , XC_C1 , XC_C1 , /* 0x1A20 */
   XC_C1 , XC_C1 , XC_C2 , XC_C1 , XC_C1 , XC_C1 , XC_C1 , XC_C1 , /* 0x1A28 */
@@ -103,8 +103,8 @@ static const LxCharClass char_class[144] =
   XC_NP , XC_NP , XC_NP , XC_NP , XC_NP , XC_NP , XC_X  , XC_X  , /* 0x1AA8 */
 };
 
-static LxCharClass
-lx_char_class (gunichar u)
+static LxThamCharClass
+lx_tham_char_class (gunichar u)
 {
   if (0x1a20 <= u && u <= 0x1aad)
     return char_class[u - 0x1a20];
@@ -112,9 +112,9 @@ lx_char_class (gunichar u)
   if (iswspace (u) || iswpunct (u) || iswdigit (u))
     return XC_NP;
 
-  if (lx_is_pua (u))
+  if (lx_tham_is_pua (u))
     {
-      if (LX_PUA_VOWEL_AM == u)
+      if (LX_THAM_PUA_VOWEL_AM == u)
         return XC_FV2;
     }
 
@@ -129,7 +129,7 @@ lx_char_class (gunichar u)
  *  INPUT METHOD ACTION TABLE  *
  *-----------------------------*/
 
-static LxImAction normal_action[XC_TOTAL][XC_TOTAL] =
+static LxThamImAction normal_action[XC_TOTAL][XC_TOTAL] =
 {
 #define P IA_P
 #define A IA_A
@@ -169,17 +169,17 @@ static LxImAction normal_action[XC_TOTAL][XC_TOTAL] =
 #undef C
 };
 
-LxImAction
-lx_im_normal_action (gunichar prev_c, gunichar input_c)
+LxThamImAction
+lx_tham_im_normal_action (gunichar prev_c, gunichar input_c)
 {
-  return normal_action[lx_char_class (prev_c)][lx_char_class (input_c)];
+  return normal_action[lx_tham_char_class (prev_c)][lx_tham_char_class (input_c)];
 }
 
-LxImAction
-lx_im_preedit_action (gunichar prev_c, gunichar input_c)
+LxThamImAction
+lx_tham_im_preedit_action (gunichar prev_c, gunichar input_c)
 {
-  LxCharClass c0 = lx_char_class (prev_c);
-  LxCharClass c1 = lx_char_class (input_c);
+  LxThamCharClass c0 = lx_tham_char_class (prev_c);
+  LxThamCharClass c1 = lx_tham_char_class (input_c);
 
   return XC_LV == c0 && (XC_C1 == c1 || XC_C2 == c1) ? IA_C : IA_R;
 }
