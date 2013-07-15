@@ -61,13 +61,10 @@ static gboolean ibus_lanxang_engine_process_key_event (IBusEngine *engine,
 static gboolean
 is_client_support_surrounding (IBusEngine *engine);
 
-/* Global variables */
-static IBusConfig *ibus_config = NULL;
-
 void
 ibus_lanxang_init (IBusBus *bus)
 {
-  ibus_config = ibus_bus_get_config (bus);
+  ibus_lanxang_init_config (bus);
 }
 
 
@@ -118,7 +115,7 @@ ibus_lanxang_engine_init (IBusLanXangEngine *lanxang_engine)
   lanxang_engine->preedit_len = 0;
 
   /* Read config */
-  ibus_lanxang_read_config (ibus_config, &opt);
+  ibus_lanxang_read_config (&opt);
   lanxang_engine->isc_mode = opt.tham_isc_mode;
 }
 

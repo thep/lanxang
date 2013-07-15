@@ -56,7 +56,6 @@ main (int argc, char **argv)
   GOptionContext *context;
 
   GtkWidget  *main_dlg;
-  IBusConfig *config;
   IBusBus    *bus;
   IBusLanXangSetupOptions opt;
   int         ret;
@@ -94,16 +93,16 @@ main (int argc, char **argv)
   bus = ibus_bus_new ();
   g_signal_connect (bus, "disconnected",
                     G_CALLBACK (ibus_lanxang_tham_disconnected_cb), NULL);
-  config = ibus_bus_get_config (bus);
+  ibus_lanxang_init_config (bus);
 
-  ibus_lanxang_read_config (config, &opt);
+  ibus_lanxang_read_config (&opt);
   ibus_lanxang_tham_setup_set_values (GTK_DIALOG (main_dlg), &opt);
 
   ret = gtk_dialog_run (GTK_DIALOG (main_dlg));
   if (GTK_RESPONSE_OK == ret)
     {
       ibus_lanxang_tham_setup_get_values (GTK_DIALOG (main_dlg), &opt);
-      ibus_lanxang_write_config (config, &opt);
+      ibus_lanxang_write_config (&opt);
       if (!opt_engine)
         {
           force_engine_to_reload_config ();

@@ -34,10 +34,10 @@ struct _IBusLanXangSetupOptions
   IscMode tham_isc_mode;
 };
 
-void ibus_lanxang_read_config (IBusConfig *config,
-                               IBusLanXangSetupOptions *opt);
-void ibus_lanxang_write_config (IBusConfig *config,
-                                const IBusLanXangSetupOptions *opt);
+void ibus_lanxang_init_config (IBusBus *bus);
+
+void ibus_lanxang_read_config (IBusLanXangSetupOptions *opt);
+void ibus_lanxang_write_config (const IBusLanXangSetupOptions *opt);
 gboolean force_engine_to_reload_config ();
 
 #endif /* __IBUS_CONFIG_H__ */
