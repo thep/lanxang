@@ -22,7 +22,7 @@
 static void
 set_default_config (IBusLanXangSetupOptions *opt)
 {
-  opt->isc_mode = ISC_BASIC;
+  opt->tham_isc_mode = ISC_BASIC;
 }
 
 void
@@ -34,12 +34,12 @@ ibus_lanxang_read_config (IBusConfig *config,
   set_default_config (opt);
 
   /* Get input sequence check mode */
-  val = ibus_config_get_value (config, CONFIG_SECTION, CONFIG_ISC_MODE);
+  val = ibus_config_get_value (config, CONFIG_SECTION, CONFIG_THAM_ISC_MODE);
   if (val)
     {
       gint32    v;
       g_variant_get (val, "i", &v);
-      opt->isc_mode = v;
+      opt->tham_isc_mode = v;
       g_variant_unref (val);
     }
 }
@@ -51,8 +51,8 @@ ibus_lanxang_write_config (IBusConfig *config,
   GVariant *val;
 
   /* Set input sequence check mode */
-  val = g_variant_new_int32 (opt->isc_mode);
-  ibus_config_set_value (config, CONFIG_SECTION, CONFIG_ISC_MODE, val);
+  val = g_variant_new_int32 (opt->tham_isc_mode);
+  ibus_config_set_value (config, CONFIG_SECTION, CONFIG_THAM_ISC_MODE, val);
 }
 
 gboolean

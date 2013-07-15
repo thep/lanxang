@@ -25,13 +25,13 @@
 
 /* Configuration names */
 #define CONFIG_SECTION  "engine/LanXang"
-#define CONFIG_ISC_MODE "isc_mode"
+#define CONFIG_THAM_ISC_MODE "tham_isc_mode"
 
 typedef struct _IBusLanXangSetupOptions IBusLanXangSetupOptions;
 
 struct _IBusLanXangSetupOptions
 {
-  IscMode isc_mode;
+  IscMode tham_isc_mode;
 };
 
 void ibus_lanxang_read_config (IBusConfig *config,

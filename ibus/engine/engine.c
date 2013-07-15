@@ -119,7 +119,7 @@ ibus_lanxang_engine_init (IBusLanXangEngine *lanxang_engine)
 
   /* Read config */
   ibus_lanxang_read_config (ibus_config, &opt);
-  lanxang_engine->isc_mode = opt.isc_mode;
+  lanxang_engine->isc_mode = opt.tham_isc_mode;
 }
 
 static gboolean

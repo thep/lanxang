@@ -111,7 +111,7 @@ ibus_lanxang_tham_setup_set_values (const GtkDialog *dlg,
   GtkWidget *widget;
 
   /* Set input sequence check value */
-  switch (opt->isc_mode)
+  switch (opt->tham_isc_mode)
     {
       case ISC_PASSTHROUGH:
         widget = g_object_get_data (G_OBJECT (dlg), "no_check_radio");
@@ -137,18 +137,18 @@ ibus_lanxang_tham_setup_get_values (const GtkDialog *dlg,
   widget = g_object_get_data (G_OBJECT (dlg), "no_check_radio");
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
-      opt->isc_mode = ISC_PASSTHROUGH;
-      goto isc_mode_done;
+      opt->tham_isc_mode = ISC_PASSTHROUGH;
+      goto tham_isc_mode_done;
     }
   widget = g_object_get_data (G_OBJECT (dlg), "strict_check_radio");
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
-      opt->isc_mode = ISC_STRICT;
-      goto isc_mode_done;
+      opt->tham_isc_mode = ISC_STRICT;
+      goto tham_isc_mode_done;
     }
-  opt->isc_mode = ISC_BASIC;
+  opt->tham_isc_mode = ISC_BASIC;
 
-isc_mode_done:
+tham_isc_mode_done:
   return;
 }
 
