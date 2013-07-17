@@ -43,7 +43,7 @@ ibus_lanxang_get_component ()
                                       "",
                                       "ibus-lanxang");
       ibus_component_add_engine (component,
-                                 ibus_engine_desc_new ("lanxang",
+                                 ibus_engine_desc_new ("lanxang-tham",
                                                        "LanXang Tham",
                                                        "Input method for Lao/Esaan Tham script",
                                                        "lana",

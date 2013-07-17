@@ -11,6 +11,10 @@ libexec_PROGRAMS = ibus-engine-lanxang
 ibus_engine_lanxang_SOURCES = \
 	engine.h \
 	engine.c \
+	lx-iengine.h \
+	lx-iengine.c \
+	lx-tham-engine.h \
+	lx-tham-engine.c \
 	main.c \
 	utils.h \
 	utils.c \
@@ -18,6 +22,8 @@ ibus_engine_lanxang_SOURCES = \
 
 noinst_HEADERS = \
 	engine.h \
+	lx-iengine.h \
+	lx-tham-engine.h \
 	utils.h \
 	$(NULL)
 

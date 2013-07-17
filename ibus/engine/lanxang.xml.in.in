@@ -11,7 +11,7 @@
   <textdomain>lanxang</textdomain>
   <engines>
     <engine>
-      <name>lanxang</name>
+      <name>lanxang-tham</name>
       <language>lana</language>
       <license>GPL</license>
       <author>Theppitak Karoonboonyanan &lt;thep@linux.thai.net&gt;</author>

@@ -22,8 +22,8 @@
 #endif
 
 #include "engine.h"
-#include "lx-tham-kbd.h"
-#include "lx-tham-im-table.h"
+#include "lx-iengine.h"
+#include "lx-tham-engine.h"
 #include "ibus-config.h"
 #include <glib.h>
 #include <string.h>
@@ -33,16 +33,12 @@
 typedef struct _IBusLanXangEngine IBusLanXangEngine;
 typedef struct _IBusLanXangEngineClass IBusLanXangEngineClass;
 
-#define PREEDIT_BUFF_LEN 4
 struct _IBusLanXangEngine
 {
   IBusEngine parent;
 
-  /* members here */
-  gboolean is_preedit;
-  gunichar preedit_str[PREEDIT_BUFF_LEN];
-  gint     preedit_len;
-  IscMode  isc_mode;
+  /* members */
+  LxIEngine *lx_iengine;
 };
 
 struct _IBusLanXangEngineClass
@@ -50,16 +46,18 @@ struct _IBusLanXangEngineClass
   IBusEngineClass parent;
 };
 
-static void ibus_lanxang_engine_class_init (IBusLanXangEngineClass *klass);
-static void ibus_lanxang_engine_init (IBusLanXangEngine *lanxang_engine);
+static GObject*
+ibus_lanxang_engine_constructor (GType                  type,
+                                 guint                  n_construct_params,
+                                 GObjectConstructParam *construct_params);
+static void ibus_lanxang_engine_destroy (IBusLanXangEngine *lanxang_engine);
+
 static gboolean ibus_lanxang_engine_process_key_event (IBusEngine *engine,
                                                        guint       keyval,
                                                        guint       keycode,
                                                        guint       modifiers);
 
-/* Utility functions */
-static gboolean
-is_client_support_surrounding (IBusEngine *engine);
+G_DEFINE_TYPE (IBusLanXangEngine, ibus_lanxang_engine, IBUS_TYPE_ENGINE)
 
 void
 ibus_lanxang_init (IBusBus *bus)
@@ -68,314 +66,55 @@ ibus_lanxang_init (IBusBus *bus)
 }
 
 
-GType
-ibus_lanxang_engine_get_type ()
-{
-  static GType type = 0;
-
-  static const GTypeInfo type_info =
-    {
-      sizeof (IBusLanXangEngineClass),
-      (GBaseInitFunc)         NULL,
-      (GBaseFinalizeFunc)     NULL,
-      (GClassInitFunc)        ibus_lanxang_engine_class_init,
-      (GClassFinalizeFunc)    NULL,
-      NULL,
-      sizeof (IBusLanXangEngine),
-      0,
-      (GInstanceInitFunc)     ibus_lanxang_engine_init,
-    };
-
-  if (!type)
-    {
-      type = g_type_register_static (IBUS_TYPE_ENGINE,
-                                     "IBusLanXangEngine",
-                                     &type_info,
-                                     (GTypeFlags)0);
-    }
-
-  return type;
-}
-
 static void
 ibus_lanxang_engine_class_init (IBusLanXangEngineClass *klass)
 {
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  IBusObjectClass *ibus_object_class = IBUS_OBJECT_CLASS (klass);
   IBusEngineClass *engine_class = IBUS_ENGINE_CLASS (klass);
 
+  object_class->constructor = ibus_lanxang_engine_constructor;
+  ibus_object_class->destroy
+    = (IBusObjectDestroyFunc) ibus_lanxang_engine_destroy;
   engine_class->process_key_event = ibus_lanxang_engine_process_key_event;
+}
+
+static GObject*
+ibus_lanxang_engine_constructor (GType                  type,
+                                 guint                  n_construct_params,
+                                 GObjectConstructParam *construct_params)
+{
+  IBusLanXangEngine *engine;
+  const gchar *name;
+
+  engine = (IBusLanXangEngine *)
+             G_OBJECT_CLASS (ibus_lanxang_engine_parent_class)->constructor (
+               type, n_construct_params, construct_params);
+  name = ibus_engine_get_name (IBUS_ENGINE (engine));
+
+  if (name && strcmp (name, "lanxang-tham") == 0)
+    {
+      engine->lx_iengine = g_object_new (LX_TYPE_THAM_ENGINE, NULL);
+    }
+
+  return G_OBJECT (engine);
+}
+
+static void
+ibus_lanxang_engine_destroy (IBusLanXangEngine *lanxang_engine)
+{
+  g_object_unref (lanxang_engine->lx_iengine);
+  IBUS_OBJECT_CLASS (ibus_lanxang_engine_parent_class)->destroy (
+                      IBUS_OBJECT (lanxang_engine));
 }
 
 static void
 ibus_lanxang_engine_init (IBusLanXangEngine *lanxang_engine)
 {
-  IBusLanXangSetupOptions opt;
-
-  lanxang_engine->is_preedit = FALSE;
-  lanxang_engine->preedit_str[0] = 0;
-  lanxang_engine->preedit_len = 0;
-
-  /* Read config */
-  ibus_lanxang_read_config (&opt);
-  lanxang_engine->isc_mode = opt.tham_isc_mode;
-}
-
-static gboolean
-is_client_support_surrounding (IBusEngine *engine)
-{
-  return engine->client_capabilities & IBUS_CAP_SURROUNDING_TEXT;
-}
-
-static gboolean
-is_context_lost_key (guint keyval)
-{
-  return ((keyval & 0xFF00) == 0xFF00) &&
-         (keyval == IBUS_BackSpace ||
-          keyval == IBUS_Tab ||
-          keyval == IBUS_Linefeed ||
-          keyval == IBUS_Clear ||
-          keyval == IBUS_Return ||
-          keyval == IBUS_Pause ||
-          keyval == IBUS_Scroll_Lock ||
-          keyval == IBUS_Sys_Req ||
-          keyval == IBUS_Escape ||
-          keyval == IBUS_Delete ||
-          /* IsCursorkey */
-          (IBUS_Home <= keyval && keyval <= IBUS_Begin) ||
-          /* IsKeypadKey, non-chars only */
-          (IBUS_KP_Space <= keyval && keyval <= IBUS_KP_Delete) ||
-          /* IsMiscFunctionKey */
-          (IBUS_Select <= keyval && keyval <= IBUS_Break) ||
-          /* IsFunctionKey */
-          (IBUS_F1 <= keyval && keyval <= IBUS_F35));
-}
-
-static gboolean
-is_context_intact_key (guint keyval)
-{
-  return (((keyval & 0xFF00) == 0xFF00) &&
-          ( /* IsModifierKey */
-           (IBUS_Shift_L <= keyval && keyval <= IBUS_Hyper_R) ||
-           (keyval == IBUS_Mode_switch) ||
-           (keyval == IBUS_Num_Lock))) ||
-         (((keyval & 0xFE00) == 0xFE00) &&
-          (IBUS_ISO_Lock <= keyval && keyval <= IBUS_ISO_Last_Group_Lock));
-}
-
-static gboolean
-ibus_lanxang_engine_append_preedit (IBusLanXangEngine *lanxang_engine,
-                                    gunichar new_char)
-{
-  if (lx_tham_is_pua (new_char))
+  if (g_object_is_floating (lanxang_engine))
     {
-      gunichar new_text[8];
-      gint     len, i;
-
-      len = lx_tham_get_pua_text (new_char, new_text, N_ELM (new_text));
-      if (0 == len)
-        return FALSE;
-
-      if (lanxang_engine->preedit_len < PREEDIT_BUFF_LEN - len)
-        {
-          for (i = 0; i < len; i++)
-            {
-              lanxang_engine->preedit_str[lanxang_engine->preedit_len++]
-                = new_text[i];
-            }
-          lanxang_engine->preedit_str[lanxang_engine->preedit_len] = 0;
-          return TRUE;
-        }
+      g_object_ref_sink (lanxang_engine);
     }
-  else
-    {
-      if (lanxang_engine->preedit_len < PREEDIT_BUFF_LEN - 1)
-        {
-          lanxang_engine->preedit_str[lanxang_engine->preedit_len++] = new_char;
-          lanxang_engine->preedit_str[lanxang_engine->preedit_len] = 0;
-          return TRUE;
-        }
-    }
-
-  return FALSE;
-}
-
-/* Return TRUE if preedit text becomes empty */
-static gboolean
-ibus_lanxang_engine_preedit_cut_last (IBusLanXangEngine *lanxang_engine)
-{
-  if (lanxang_engine->preedit_len > 0)
-    {
-      lanxang_engine->preedit_str[--lanxang_engine->preedit_len] = 0;
-      return lanxang_engine->preedit_len == 0;
-    }
-
-  return TRUE;
-}
-
-static void
-ibus_lanxang_engine_preedit_clear (IBusLanXangEngine *lanxang_engine)
-{
-  lanxang_engine->preedit_str[0] = 0;
-  lanxang_engine->preedit_len = 0;
-}
-
-static gunichar
-ibus_lanxang_engine_get_prev_preedit_char (IBusLanXangEngine *lanxang_engine)
-{
-  if (lanxang_engine->preedit_len > 0)
-    return lanxang_engine->preedit_str[lanxang_engine->preedit_len - 1];
-
-  return 0;
-}
-
-static void
-ibus_lanxang_engine_commit_preedit_reversed (IBusLanXangEngine *lanxang_engine)
-{
-  gunichar r_text[PREEDIT_BUFF_LEN];
-  gint     i;
-  IBusText *text;
-
-  ibus_engine_hide_preedit_text (IBUS_ENGINE (lanxang_engine));
-
-  /* prepare reversed text, clearing preedit string */
-  for (i = 0; lanxang_engine->preedit_len > 0; lanxang_engine->preedit_len--)
-    r_text[i++] = lanxang_engine->preedit_str[lanxang_engine->preedit_len - 1];
-  r_text[i] = 0;
-
-  /* commit it */
-  text = ibus_text_new_from_ucs4 (r_text);
-  ibus_engine_commit_text (IBUS_ENGINE (lanxang_engine), text);
-}
-
-static void
-ibus_lanxang_engine_update_preedit (IBusLanXangEngine *lanxang_engine)
-{
-  IBusText *text;
-
-  text = ibus_text_new_from_ucs4 (lanxang_engine->preedit_str);
-  ibus_text_append_attribute(text,
-                             IBUS_ATTR_TYPE_UNDERLINE,
-                             IBUS_ATTR_UNDERLINE_SINGLE,
-                             0, -1);
-
-  ibus_engine_update_preedit_text (IBUS_ENGINE (lanxang_engine),
-                                   text, lanxang_engine->preedit_len, TRUE);
-}
-
-static gunichar
-ibus_lanxang_engine_get_prev_surrounding_char (IBusLanXangEngine *lanxang_engine)
-{
-  if (is_client_support_surrounding (IBUS_ENGINE (lanxang_engine)))
-    {
-      IBusText *surrounding;
-      guint     cursor_pos;
-      guint     anchor_pos;
-      gunichar *u_surrounding;
-      gunichar  ret = 0;
-
-      ibus_engine_get_surrounding_text (IBUS_ENGINE (lanxang_engine),
-                                        &surrounding, &cursor_pos, &anchor_pos);
-      u_surrounding = g_utf8_to_ucs4 (ibus_text_get_text (surrounding), -1,
-                                      NULL, NULL, NULL);
-      if (u_surrounding)
-        {
-          ret = (cursor_pos > 0) ? u_surrounding[cursor_pos - 1] : 0;
-          g_free (u_surrounding);
-        }
-
-      return ret;
-    }
-
-  return 0;
-}
-
-static gboolean
-ibus_lanxang_engine_commit_char (IBusLanXangEngine *lanxang_engine,
-                                 gunichar new_char)
-{
-  IBusText *text;
-
-  /* Private-Use-Area char? */
-  if (lx_tham_is_pua (new_char))
-    {
-      gunichar new_text[8];
-      if (!lx_tham_get_pua_text (new_char, new_text, N_ELM (new_text)))
-        return FALSE;
-      text = ibus_text_new_from_ucs4 (new_text);
-    }
-  else
-    {
-      text = ibus_text_new_from_unichar (new_char);
-    }
-
-  ibus_engine_commit_text (IBUS_ENGINE (lanxang_engine), text);
-
-  return TRUE;
-}
-
-static gboolean
-ibus_lanxang_engine_commit_char_swapped (IBusLanXangEngine *lanxang_engine,
-                                         gunichar new_char)
-{
-  gunichar prev_char;
-  gunichar commit_buff[10];
-  IBusText *commit_text;
-  gint     len;
-
-  if (is_client_support_surrounding (IBUS_ENGINE (lanxang_engine)))
-    {
-      prev_char = ibus_lanxang_engine_get_prev_surrounding_char (lanxang_engine);
-      ibus_engine_delete_surrounding_text (IBUS_ENGINE (lanxang_engine), -1, 1);
-
-      if (lx_tham_is_pua (new_char))
-        {
-          len = lx_tham_get_pua_text (new_char, commit_buff, N_ELM (commit_buff));
-        }
-      else
-        {
-          commit_buff[0] = new_char;
-          len = 1;
-        }
-      commit_buff[len++] = prev_char;
-      commit_buff[len] = 0;
-      commit_text = ibus_text_new_from_ucs4 (commit_buff);
-
-      ibus_engine_commit_text (IBUS_ENGINE (lanxang_engine), commit_text);
-
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-/* Return TRUE if key is handled */
-static gboolean
-ibus_lanxang_engine_process_preedit_keys (IBusLanXangEngine *lanxang_engine,
-                                          guint keyval,
-                                          guint modifiers)
-{
-  if (IBUS_BackSpace == keyval)
-    {
-      if (ibus_lanxang_engine_preedit_cut_last (lanxang_engine))
-        {
-          ibus_engine_hide_preedit_text (IBUS_ENGINE (lanxang_engine));
-          lanxang_engine->is_preedit = FALSE;
-        }
-      else
-        {
-          ibus_lanxang_engine_update_preedit (lanxang_engine);
-        }
-      return TRUE;
-    }
-
-  if (is_context_lost_key (keyval))
-    {
-      ibus_lanxang_engine_preedit_clear (lanxang_engine);
-      ibus_engine_hide_preedit_text (IBUS_ENGINE (lanxang_engine));
-      lanxang_engine->is_preedit = FALSE;
-      return FALSE;
-    }
-
-  return FALSE;
 }
 
 static gboolean
@@ -385,104 +124,9 @@ ibus_lanxang_engine_process_key_event (IBusEngine *engine,
                                        guint       modifiers)
 {
   IBusLanXangEngine *lanxang_engine = IBUS_LANXANG_ENGINE (engine);
-  gint shift_lv;
-  gunichar new_char, prev_char;
-  LxThamImAction action;
 
-  if (modifiers & IBUS_RELEASE_MASK)
-    return FALSE;
-
-  if (modifiers & (IBUS_CONTROL_MASK | IBUS_MOD1_MASK))
-    return FALSE;
-
-  if (lanxang_engine->is_preedit)
-    {
-      /* process editor keys */
-      if (ibus_lanxang_engine_process_preedit_keys (lanxang_engine,
-                                                    keyval, modifiers))
-        {
-          return TRUE;
-        }
-    }
-
-  if (is_context_lost_key (keyval))
-    return FALSE;
-
-  if (0 == keyval || is_context_intact_key (keyval))
-    return FALSE;
-
-  shift_lv = !(modifiers & (IBUS_SHIFT_MASK | IBUS_MOD5_MASK)) ? 0
-               : ((modifiers & IBUS_MOD5_MASK) ? 2 : 1);
-  new_char = lx_tham_map_keycode (keycode, shift_lv);
-  if (0 == new_char)
-    return FALSE;
-
-  if (lanxang_engine->is_preedit)
-    {
-      prev_char = ibus_lanxang_engine_get_prev_preedit_char (lanxang_engine);
-      action = lx_tham_im_preedit_action (prev_char, new_char);
-      if (IA_C == action)
-        {
-          ibus_lanxang_engine_append_preedit (lanxang_engine, new_char);
-          ibus_lanxang_engine_commit_preedit_reversed (lanxang_engine);
-          lanxang_engine->is_preedit = FALSE;
-        }
-    }
-  else
-    {
-      prev_char = ibus_lanxang_engine_get_prev_surrounding_char (lanxang_engine);
-      action = lx_tham_im_normal_action (prev_char, new_char);
-
-      switch (lanxang_engine->isc_mode)
-        {
-          case ISC_PASSTHROUGH:
-            if (IA_R == action || IA_S == action)
-              action = IA_A;
-            break;
-          case ISC_STRICT:
-            if (IA_S == action)
-              action = IA_R;
-            break;
-          case ISC_BASIC:
-          default:
-            if (IA_S == action)
-              action = IA_A;
-            break;
-        }
-
-      switch (action)
-        {
-          case IA_P:
-            ibus_lanxang_engine_append_preedit (lanxang_engine, new_char);
-            ibus_lanxang_engine_update_preedit (lanxang_engine);
-            lanxang_engine->is_preedit = TRUE;
-            break;
-
-          case IA_A:
-            if (!ibus_lanxang_engine_commit_char (lanxang_engine, new_char))
-              goto reject_char;
-            break;
-
-          case IA_W:
-            ibus_lanxang_engine_commit_char_swapped (lanxang_engine, new_char);
-            break;
-
-          case IA_R:
-          case IA_S:
-            goto reject_char;
-
-          case IA_C:
-          default:
-            /* shouldn't reach here! */
-            break;
-        }
-    }
-
-  return TRUE;
-
-reject_char:
-  /* gdk_beep() */
-  return TRUE;
+  return lx_iengine_process_key_event (lanxang_engine->lx_iengine, engine,
+                                       keyval, keycode, modifiers);
 }
 
 /*

@@ -60,7 +60,7 @@ init (void)
 
   factory = ibus_factory_new (ibus_bus_get_connection (bus));
   g_object_ref_sink (factory);
-  ibus_factory_add_engine (factory, "lanxang", IBUS_TYPE_LANXANG_ENGINE);
+  ibus_factory_add_engine (factory, "lanxang-tham", IBUS_TYPE_LANXANG_ENGINE);
 
   if (opt_ibus)
     {
