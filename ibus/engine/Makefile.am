@@ -15,6 +15,8 @@ ibus_engine_lanxang_SOURCES = \
 	lx-iengine.c \
 	lx-tham-engine.h \
 	lx-tham-engine.c \
+	lx-tn-engine.h \
+	lx-tn-engine.c \
 	main.c \
 	utils.h \
 	utils.c \
@@ -24,6 +26,7 @@ noinst_HEADERS = \
 	engine.h \
 	lx-iengine.h \
 	lx-tham-engine.h \
+	lx-tn-engine.h \
 	utils.h \
 	$(NULL)
 

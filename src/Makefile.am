@@ -11,6 +11,8 @@ liblanxang_a_SOURCES = \
 	lx-tham-kbd.c \
 	lx-tham-im-table.h \
 	lx-tham-im-table.c \
+	lx-tn-kbd.h \
+	lx-tn-kbd.c \
 	$(NULL)
 
 liblanxang_a_CFLAGS = \

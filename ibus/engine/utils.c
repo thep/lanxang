@@ -51,6 +51,15 @@ ibus_lanxang_get_component ()
                                                        "Theppitak Karoonboonyanan <thep@linux.thai.net>",
                                                        PKGDATADIR"/icons/ibus-lanxang-tham.svg",
                                                        "us"));
+      ibus_component_add_engine (component,
+                                 ibus_engine_desc_new ("lanxang-tn",
+                                                       "LanXang Thai Noi",
+                                                       "Input method for Thai Noi script",
+                                                       "lo",
+                                                       "GPL",
+                                                       "Theppitak Karoonboonyanan <thep@linux.thai.net>",
+                                                       PKGDATADIR"/icons/ibus-lanxang-tn.svg",
+                                                       "us"));
     }
 
   return component;

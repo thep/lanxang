@@ -22,5 +22,16 @@
       <setup>${libexecdir}/ibus-setup-lanxang-tham</setup>
       <rank>0</rank>
     </engine>
+    <engine>
+      <name>lanxang-tn</name>
+      <language>lo</language>
+      <license>GPL</license>
+      <author>Theppitak Karoonboonyanan &lt;thep@linux.thai.net&gt;</author>
+      <icon>${pkgdatadir}/icons/ibus-lanxang-tn.svg</icon>
+      <layout>us</layout>
+      <longname>LanXang Thai Noi</longname>
+      <description>Input method for Thai Noi script</description>
+      <rank>0</rank>
+    </engine>
   </engines>
 </component>
