@@ -24,6 +24,8 @@
 #include "lx-iengine.h"
 #include "lx-tn-engine.h"
 #include "lx-tn-kbd.h"
+#include "lx-tn-im-table.h"
+#include "ibus-config.h"
 #include "im-utils.h"
 #include <glib.h>
 #include <string.h>
@@ -37,6 +39,9 @@ typedef struct _LxTNEngineClass LxTNEngineClass;
 struct _LxTNEngine
 {
   GObject  parent;
+
+  /* members here */
+  IscMode  isc_mode;
 };
 
 struct _LxTNEngineClass
@@ -70,6 +75,39 @@ lx_tn_engine_class_init (LxTNEngineClass *klass)
 static void
 lx_tn_engine_init (LxTNEngine *lx_tn_engine)
 {
+  IBusLanXangSetupOptions opt;
+
+  /* Read config */
+  ibus_lanxang_read_config (&opt);
+  lx_tn_engine->isc_mode = opt.tham_isc_mode;
+}
+
+static gunichar
+lx_tn_engine_get_prev_surrounding_char (LxTNEngine *lx_tn_engine,
+                                        IBusEngine *ibus_engine)
+{
+  if (is_client_support_surrounding (ibus_engine))
+    {
+      IBusText *surrounding;
+      guint     cursor_pos;
+      guint     anchor_pos;
+      gunichar *u_surrounding;
+      gunichar  ret = 0;
+
+      ibus_engine_get_surrounding_text (ibus_engine,
+                                        &surrounding, &cursor_pos, &anchor_pos);
+      u_surrounding = g_utf8_to_ucs4 (ibus_text_get_text (surrounding), -1,
+                                      NULL, NULL, NULL);
+      if (u_surrounding)
+        {
+          ret = (cursor_pos > 0) ? u_surrounding[cursor_pos - 1] : 0;
+          g_free (u_surrounding);
+        }
+
+      return ret;
+    }
+
+  return 0;
 }
 
 static gboolean
@@ -94,7 +132,8 @@ lx_tn_engine_process_key_event (LxIEngine  *lx_iengine,
 {
   LxTNEngine *lx_tn_engine = LX_TN_ENGINE (lx_iengine);
   gint shift_lv;
-  gunichar new_char;
+  gunichar new_char, prev_char;
+  LxTNImAction action;
 
   if (modifiers & IBUS_RELEASE_MASK)
     return FALSE;
@@ -114,8 +153,47 @@ lx_tn_engine_process_key_event (LxIEngine  *lx_iengine,
   if (0 == new_char)
     return FALSE;
 
-  lx_tn_engine_commit_char (lx_tn_engine, ibus_engine, new_char);
+  prev_char = lx_tn_engine_get_prev_surrounding_char (lx_tn_engine,
+                                                      ibus_engine);
+  action = lx_tn_im_action (prev_char, new_char);
 
+  switch (lx_tn_engine->isc_mode)
+    {
+      case ISC_PASSTHROUGH:
+        if (NA_R == action || NA_S == action)
+          action = NA_A;
+        break;
+      case ISC_STRICT:
+        if (NA_S == action)
+          action = NA_R;
+        break;
+      case ISC_BASIC:
+      default:
+        if (NA_S == action)
+          action = NA_A;
+        break;
+    }
+
+  switch (action)
+    {
+      case NA_A:
+        if (!lx_tn_engine_commit_char (lx_tn_engine, ibus_engine, new_char))
+          goto reject_char;
+        break;
+
+      case NA_R:
+      case NA_S:
+        goto reject_char;
+
+      default:
+        /* shouldn't reach here! */
+        break;
+    }
+
+  return TRUE;
+
+reject_char:
+  /* gdk_beep() */
   return TRUE;
 }
 
