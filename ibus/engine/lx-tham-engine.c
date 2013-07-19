@@ -26,6 +26,7 @@
 #include "lx-tham-kbd.h"
 #include "lx-tham-im-table.h"
 #include "ibus-config.h"
+#include "im-utils.h"
 #include <glib.h>
 #include <string.h>
 
@@ -86,48 +87,6 @@ lx_tham_engine_init (LxThamEngine *lx_tham_engine)
   /* Read config */
   ibus_lanxang_read_config (&opt);
   lx_tham_engine->isc_mode = opt.tham_isc_mode;
-}
-
-static gboolean
-is_client_support_surrounding (IBusEngine *engine)
-{
-  return engine->client_capabilities & IBUS_CAP_SURROUNDING_TEXT;
-}
-
-static gboolean
-is_context_lost_key (guint keyval)
-{
-  return ((keyval & 0xFF00) == 0xFF00) &&
-         (keyval == IBUS_BackSpace ||
-          keyval == IBUS_Tab ||
-          keyval == IBUS_Linefeed ||
-          keyval == IBUS_Clear ||
-          keyval == IBUS_Return ||
-          keyval == IBUS_Pause ||
-          keyval == IBUS_Scroll_Lock ||
-          keyval == IBUS_Sys_Req ||
-          keyval == IBUS_Escape ||
-          keyval == IBUS_Delete ||
-          /* IsCursorkey */
-          (IBUS_Home <= keyval && keyval <= IBUS_Begin) ||
-          /* IsKeypadKey, non-chars only */
-          (IBUS_KP_Space <= keyval && keyval <= IBUS_KP_Delete) ||
-          /* IsMiscFunctionKey */
-          (IBUS_Select <= keyval && keyval <= IBUS_Break) ||
-          /* IsFunctionKey */
-          (IBUS_F1 <= keyval && keyval <= IBUS_F35));
-}
-
-static gboolean
-is_context_intact_key (guint keyval)
-{
-  return (((keyval & 0xFF00) == 0xFF00) &&
-          ( /* IsModifierKey */
-           (IBUS_Shift_L <= keyval && keyval <= IBUS_Hyper_R) ||
-           (keyval == IBUS_Mode_switch) ||
-           (keyval == IBUS_Num_Lock))) ||
-         (((keyval & 0xFE00) == 0xFE00) &&
-          (IBUS_ISO_Lock <= keyval && keyval <= IBUS_ISO_Last_Group_Lock));
 }
 
 static gboolean

@@ -24,6 +24,7 @@
 #include "lx-iengine.h"
 #include "lx-tn-engine.h"
 #include "lx-tn-kbd.h"
+#include "im-utils.h"
 #include <glib.h>
 #include <string.h>
 
@@ -69,42 +70,6 @@ lx_tn_engine_class_init (LxTNEngineClass *klass)
 static void
 lx_tn_engine_init (LxTNEngine *lx_tn_engine)
 {
-}
-
-static gboolean
-is_context_lost_key (guint keyval)
-{
-  return ((keyval & 0xFF00) == 0xFF00) &&
-         (keyval == IBUS_BackSpace ||
-          keyval == IBUS_Tab ||
-          keyval == IBUS_Linefeed ||
-          keyval == IBUS_Clear ||
-          keyval == IBUS_Return ||
-          keyval == IBUS_Pause ||
-          keyval == IBUS_Scroll_Lock ||
-          keyval == IBUS_Sys_Req ||
-          keyval == IBUS_Escape ||
-          keyval == IBUS_Delete ||
-          /* IsCursorkey */
-          (IBUS_Home <= keyval && keyval <= IBUS_Begin) ||
-          /* IsKeypadKey, non-chars only */
-          (IBUS_KP_Space <= keyval && keyval <= IBUS_KP_Delete) ||
-          /* IsMiscFunctionKey */
-          (IBUS_Select <= keyval && keyval <= IBUS_Break) ||
-          /* IsFunctionKey */
-          (IBUS_F1 <= keyval && keyval <= IBUS_F35));
-}
-
-static gboolean
-is_context_intact_key (guint keyval)
-{
-  return (((keyval & 0xFF00) == 0xFF00) &&
-          ( /* IsModifierKey */
-           (IBUS_Shift_L <= keyval && keyval <= IBUS_Hyper_R) ||
-           (keyval == IBUS_Mode_switch) ||
-           (keyval == IBUS_Num_Lock))) ||
-         (((keyval & 0xFE00) == 0xFE00) &&
-          (IBUS_ISO_Lock <= keyval && keyval <= IBUS_ISO_Last_Group_Lock));
 }
 
 static gboolean
