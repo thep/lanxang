@@ -124,6 +124,37 @@ lx_tn_engine_commit_char (LxTNEngine *lx_tn_engine,
 }
 
 static gboolean
+lx_tn_engine_convert_seq (LxTNEngine *lx_tn_engine,
+                          IBusEngine *ibus_engine,
+                          gunichar    input_char)
+{
+  if (is_client_support_surrounding (ibus_engine))
+    {
+      IBusText *surrounding;
+      guint     cursor_pos;
+      guint     anchor_pos;
+      LxTNConv  conv;
+
+      ibus_engine_get_surrounding_text (ibus_engine,
+                                        &surrounding, &cursor_pos, &anchor_pos);
+      if (lx_tn_im_conversion (ibus_text_get_text (surrounding),
+                               cursor_pos, anchor_pos, input_char, &conv))
+        {
+          IBusText *text;
+          ibus_engine_delete_surrounding_text (ibus_engine,
+                                               conv.del_offset,
+                                               -conv.del_offset);
+          text = ibus_text_new_from_static_string (conv.commit_text);
+          ibus_engine_commit_text (ibus_engine, text);
+
+          return TRUE;
+        }
+    }
+
+  return FALSE;
+}
+
+static gboolean
 lx_tn_engine_process_key_event (LxIEngine  *lx_iengine,
                                 IBusEngine *ibus_engine,
                                 guint       keyval,
@@ -152,6 +183,9 @@ lx_tn_engine_process_key_event (LxIEngine  *lx_iengine,
   new_char = lx_tn_map_keycode (keycode, shift_lv);
   if (0 == new_char)
     return FALSE;
+
+  if (lx_tn_engine_convert_seq (lx_tn_engine, ibus_engine, new_char))
+    return TRUE;
 
   prev_char = lx_tn_engine_get_prev_surrounding_char (lx_tn_engine,
                                                       ibus_engine);

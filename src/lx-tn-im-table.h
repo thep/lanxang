@@ -36,6 +36,46 @@ enum _LxTNImAction
 
 LxTNImAction lx_tn_im_action (gunichar prev_c, gunichar input_c);
 
+/*
+ * Surround text conversion
+ */
+
+/* Virama */
+#define TN_PHINTHU    0x0EBA
+
+/* Subjoins */
+#define TN_SUBBAIMAI  0x0EE0
+#define TN_SUBMA      0x0EE1
+#define TN_SUBLING    0x0EE2
+#define TN_SUBSUA     0x0EE3
+#define TN_SUBPHAN    0x0EE4
+#define TN_SUBTHONG   0x0EE5
+#define TN_SUBDEK     0x0EE6
+
+/* Conjuncts */
+#define TN_KHAINU     0x0EF0
+#define TN_KHAIMA     0x0EF1
+#define TN_KHWAINU    0x0EF2
+#define TN_KHWAIMA    0x0EF3
+#define TN_THUNGNU    0x0EF4
+#define TN_THUNGLING  0x0EF5
+#define TN_SUANU      0x0EF6
+#define TN_SUAMA      0x0EF7
+
+typedef struct _LxTNConv LxTNConv;
+
+struct _LxTNConv
+{
+  gint   del_offset;
+  gchar  commit_text[8];
+};
+
+gboolean lx_tn_im_conversion (const gchar *surrounding,
+                              gint         cursor_pos,
+                              gint         anchor_pos,
+                              gunichar     input_char,
+                              LxTNConv    *conv);
+
 #endif /* __LX_TN_IM_TABLE_H__ */
 
 /*
