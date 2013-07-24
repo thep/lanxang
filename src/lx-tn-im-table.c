@@ -55,7 +55,7 @@ static const LxTNCharClass char_class[128] =
   NC_C,   NC_C,   NC_C,   NC_C,   NC_C,   NC_C,   NC_C,   NC_C,   /* 0E98 */
   NC_C,   NC_C,   NC_C,   NC_C,   NC_FV3, NC_C,   NC_FV3, NC_C,   /* 0EA0 */
   NC_C,   NC_C,   NC_C,   NC_C,   NC_C,   NC_C,   NC_C,   NC_X,   /* 0EA8 */
-  NC_FV1, NC_AV2, NC_FV1, NC_FV1, NC_AV1, NC_AV3, NC_AV2, NC_AV3, /* 0EB0 */
+  NC_FV1, NC_AV2, NC_FV2, NC_FV1, NC_AV1, NC_AV3, NC_AV2, NC_AV3, /* 0EB0 */
   NC_BV1, NC_BV2, NC_BD,  NC_AV2, NC_C,   NC_FV1, NC_FV1, NC_X,   /* 0EB8 */
   NC_LV,  NC_LV,  NC_LV,  NC_LV,  NC_LV,  NC_FV2, NC_X,   NC_AD2, /* 0EC0 */
   NC_T,   NC_T,   NC_T,   NC_T,   NC_AD1, NC_AD1, NC_AD3, NC_X,   /* 0EC8 */
@@ -89,10 +89,10 @@ static LxTNImAction normal_action[NC_TOTAL][NC_TOTAL] =
 /*       V  V  V  V  V  V  D     D  D  D  V  V  V */
 /*          1  2  3  1  2        1  2  3  1  2  3 */
   {A, A, A, S, S, A, R, R, R, R, R, R, R, R, R, R}, /*X*/
-  {A, A, A, A, S, A, A, A, A, A, A, A, A, A, A, A}, /*C*/
+  {A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A}, /*C*/
   {S, A, S, S, S, S, R, R, R, R, R, R, R, R, R, R}, /*LV*/
   {A, A, A, A, S, A, R, R, R, R, R, R, R, R, R, R}, /*FV1*/
-  {A, A, A, A, S, A, R, R, R, R, R, R, R, R, R, R}, /*FV2*/
+  {A, A, A, A, S, A, R, R, A, R, R, R, R, R, R, R}, /*FV2*/
   {A, A, A, S, A, S, R, R, R, R, R, R, R, R, R, R}, /*FV3*/
   {A, A, A, A, S, A, R, R, R, A, A, R, R, R, R, R}, /*BV1*/
   {A, A, A, S, S, A, R, R, R, A, R, R, R, R, R, R}, /*BV2*/
