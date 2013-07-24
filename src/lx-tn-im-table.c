@@ -60,7 +60,7 @@ static const LxTNCharClass char_class[128] =
   NC_LV,  NC_LV,  NC_LV,  NC_LV,  NC_LV,  NC_FV2, NC_X,   NC_AD2, /* 0EC0 */
   NC_T,   NC_T,   NC_T,   NC_T,   NC_AD1, NC_AD1, NC_AD3, NC_X,   /* 0EC8 */
   NC_X,   NC_X,   NC_X,   NC_X,   NC_X,   NC_X,   NC_X,   NC_X,   /* 0ED0 */
-  NC_X,   NC_X,   NC_X,   NC_X,   NC_X,   NC_X,   NC_X,   NC_X,   /* 0ED8 */
+  NC_X,   NC_X,   NC_X,   NC_X,   NC_C,   NC_C,   NC_X,   NC_X,   /* 0ED8 */
   NC_C,   NC_C,   NC_C,   NC_C,   NC_C,   NC_C,   NC_C,   NC_X,   /* 0EE0 */
   NC_X,   NC_X,   NC_X,   NC_X,   NC_X,   NC_X,   NC_X,   NC_X,   /* 0EE8 */
   NC_C,   NC_C,   NC_C,   NC_C,   NC_C,   NC_C,   NC_C,   NC_C,   /* 0EF0 */
@@ -189,6 +189,7 @@ lx_tn_im_conversion (const gchar *surrounding,
             case 0x0e84: /* KHO KHWAI */  output_char = TN_KHWAINU;   break;
             case 0x0e96: /* THO THUNG */  output_char = TN_THUNGNU;   break;
             case 0x0eaa: /* SO SUA */     output_char = TN_SUANU;     break;
+            case 0x0eab: /* HO HIP */     output_char = 0x0edc;       break;
           }
         if (output_char)
           {
@@ -221,6 +222,10 @@ lx_tn_im_conversion (const gchar *surrounding,
             case 0x0eaa: /* SO SUA */
               conv->del_offset = -2;
               output_char = TN_SUAMA;
+              break;
+            case 0x0eab: /* HO HIP */
+              conv->del_offset = -2;
+              output_char = 0x0edd;
               break;
             default:
               conv->del_offset = -1;
