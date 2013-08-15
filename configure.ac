@@ -6,6 +6,7 @@ AC_INIT([lanxang], [0.1.0], [esaan-scripts-wg@googlegroups.com])
 AM_INIT_AUTOMAKE([1.10])
 AC_CONFIG_SRCDIR([src/lx-tham-kbd.c])
 AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_MACRO_DIR([m4])
 
 # Checks for programs.
 AC_PROG_CC
