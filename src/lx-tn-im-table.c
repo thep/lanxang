@@ -98,7 +98,7 @@ static LxTNImAction normal_action[NC_TOTAL][NC_TOTAL] =
   {A, A, A, S, S, A, R, R, A, A, R, R, R, R, R, R}, /*BV2*/
   {A, A, A, S, S, A, R, R, R, R, R, R, R, R, R, R}, /*BD*/
   {A, A, A, A, A, A, R, R, A, R, R, R, R, R, R, R}, /*T*/
-  {A, A, A, S, S, A, R, R, R, R, R, R, R, R, R, R}, /*AD1*/
+  {A, A, A, S, S, A, R, R, R, A, R, R, R, R, R, R}, /*AD1*/
   {A, A, A, S, S, A, R, R, R, R, R, R, R, R, R, R}, /*AD2*/
   {A, A, A, S, S, A, R, R, R, R, R, R, R, R, R, R}, /*AD3*/
   {A, A, A, S, S, A, R, R, A, A, A, R, R, R, R, R}, /*AV1*/
