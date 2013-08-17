@@ -68,7 +68,7 @@ enum _LxThamCharClass
   XC_IV,   /* Independent Vowels (RU, LU, I, II, U, UU, E, O) */
   XC_C1,   /* Consonants 1 (Other Consonants) */
   XC_C2,   /* Consonants 2 (HIGH KXA, LOW KXA, LOW SA, HIGH FA, LOW FA,
-              HIGH YA, RA, LA, LLA, A, LOW HA, GREAT SA) */
+              HIGH YA, RA, LLA, A, LOW HA, GREAT SA) */
   XC_PH,   /* Phinthu (SAKOT) */
   XC_S1,   /* Subjoins 1 (MEDIAL RA) */
   XC_S2,   /* Subjoins 2 (MEDIAL LA, LA TANG LAI) */
@@ -87,7 +87,7 @@ static const LxThamCharClass char_class[144] =
   XC_C1 , XC_C1 , XC_C2 , XC_C1 , XC_C1 , XC_C1 , XC_C1 , XC_C1 , /* 0x1A28 */
   XC_C1 , XC_C1 , XC_C1 , XC_C1 , XC_C1 , XC_C1 , XC_C1 , XC_C1 , /* 0x1A30 */
   XC_C1 , XC_C1 , XC_C2 , XC_C1 , XC_C2 , XC_C1 , XC_C1 , XC_C1 , /* 0x1A38 */
-  XC_C2 , XC_C2 , XC_IV , XC_C2 , XC_IV , XC_C1 , XC_C1 , XC_C1 , /* 0x1A40 */
+  XC_C2 , XC_C2 , XC_IV , XC_C1 , XC_IV , XC_C1 , XC_C1 , XC_C1 , /* 0x1A40 */
   XC_C1 , XC_C1 , XC_C2 , XC_C2 , XC_C2 , XC_IV , XC_IV , XC_IV , /* 0x1A48 */
   XC_IV , XC_IV , XC_IV , XC_LG , XC_C2 , XC_S1 , XC_S2 , XC_S2 , /* 0x1A50 */
   XC_AD1, XC_AD1, XC_X  , XC_X  , XC_X  , XC_X  , XC_X  , XC_X  , /* 0x1A58 */
