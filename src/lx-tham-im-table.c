@@ -73,6 +73,7 @@ enum _LxThamCharClass
   XC_S1,   /* Subjoins 1 (MEDIAL RA) */
   XC_S2,   /* Subjoins 2 (MEDIAL LA, LA TANG LAI) */
   XC_S3,   /* Subjoins 3 (DOUBLE DOT BELOW) */
+  XC_S4,   /* Subjoins 4 (SCALED HIGH RATHA, MA, BA, SA) */
   XC_T,    /* Tones */
   XC_LG,   /* Ligatures (LAE) */
   XC_CR,   /* Cryptograms (CRYPTOGRAMMIC DOT) */
@@ -90,7 +91,7 @@ static const LxThamCharClass char_class[144] =
   XC_C2 , XC_C2 , XC_IV , XC_C1 , XC_IV , XC_C1 , XC_C1 , XC_C1 , /* 0x1A40 */
   XC_C1 , XC_C1 , XC_C2 , XC_C2 , XC_C2 , XC_IV , XC_IV , XC_IV , /* 0x1A48 */
   XC_IV , XC_IV , XC_IV , XC_LG , XC_C2 , XC_S1 , XC_S2 , XC_S2 , /* 0x1A50 */
-  XC_AD1, XC_AD1, XC_X  , XC_X  , XC_X  , XC_X  , XC_X  , XC_X  , /* 0x1A58 */
+  XC_AD1, XC_AD1, XC_AD1, XC_S4 , XC_S4 , XC_S4 , XC_S4 , XC_X  , /* 0x1A58 */
   XC_PH , XC_FV1, XC_AD1, XC_FV2, XC_FV2, XC_AV , XC_AV , XC_AV , /* 0x1A60 */
   XC_AV , XC_BV1, XC_BV1, XC_AV , XC_BV2, XC_FV3, XC_LV , XC_LV , /* 0x1A68 */
   XC_LV , XC_LV , XC_LV , XC_AV , XC_AD2, XC_T  , XC_T  , XC_X  , /* 0x1A70 */
@@ -137,30 +138,31 @@ static LxThamImAction normal_action[XC_TOTAL][XC_TOTAL] =
 #define R IA_R
 #define S IA_S
 #define C IA_C
-       /* X, L, A, A, A, B, B, F, F, F, I, C, C, P, S, S, S, T, L, C, N */
-       /*  , V, V, D, D, V, V, V, V, V, V, 1, 2, H, 1, 2, 3,  , G, R, P */
-       /*  ,  ,  , 1, 2, 1, 2, 1, 2, 3,  ,  ,  ,  ,  ,  ,  ,  ,  ,  ,   */
-  /*X*/   R, P, R, R, R, R, R, R, R, R, A, A, A, R, R, R, R, R, A, R, A,
-  /*LV*/  R, P, A, A, S, S, S, A, A, S, A, A, A, A, W, A, A, A, A, A, A,
-  /*AV*/  R, P, R, R, A, R, A, S, A, S, A, A, A, A, R, A, A, A, A, A, A,
-  /*AD1*/ R, P, R, R, R, R, R, S, S, S, A, A, A, A, R, A, A, A, A, A, A,
-  /*AD2*/ R, P, R, R, R, R, R, S, A, S, A, A, A, S, R, R, R, A, A, R, A,
-  /*BV1*/ R, P, S, A, A, R, R, S, S, S, A, A, A, S, A, R, R, A, A, R, A,
-  /*BV2*/ R, P, R, A, R, R, R, A, R, R, R, A, A, S, R, R, R, A, A, R, A,
-  /*FV1*/ R, P, R, R, R, R, R, R, R, R, A, A, A, R, R, R, R, R, A, R, A,
-  /*FV2*/ R, P, R, A, R, R, R, A, R, R, A, A, A, A, R, A, A, R, A, A, A,
-  /*FV3*/ R, P, R, R, R, R, R, R, R, R, A, A, A, R, R, R, R, R, A, R, A,
-  /*IV*/  R, P, A, R, R, R, R, R, R, R, R, A, A, R, R, R, R, R, A, R, A,
-  /*C1*/  R, P, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A,
-  /*C2*/  R, P, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A,
-  /*PH*/  R, P, R, R, R, R, R, R, R, R, R, A, R, R, R, R, R, R, R, R, R,
-  /*S1*/  R, P, A, A, A, A, A, A, A, A, A, A, A, A, R, R, S, A, A, A, A,
-  /*S2*/  R, P, A, A, A, A, S, A, A, A, A, A, A, A, R, R, S, A, A, A, A,
-  /*S3*/  R, P, R, R, R, R, R, R, R, R, A, A, A, R, R, R, R, R, A, R, A,
-  /*T*/   R, P, R, R, R, R, R, A, A, A, A, A, A, A, R, R, A, R, A, A, A,
-  /*LG*/  R, P, R, R, R, R, R, A, R, R, A, A, A, A, R, R, A, A, A, A, A,
-  /*CR*/  R, P, A, A, A, A, A, A, A, A, A, A, A, S, A, A, R, A, A, A, A,
-  /*NP*/  R, P, R, R, R, R, R, R, R, R, A, A, A, R, R, R, R, R, A, R, A,
+       /* X, L, A, A, A, B, B, F, F, F, I, C, C, P, S, S, S, S, T, L, C, N */
+       /*  , V, V, D, D, V, V, V, V, V, V, 1, 2, H, 1, 2, 3, 4,  , G, R, P */
+       /*  ,  ,  , 1, 2, 1, 2, 1, 2, 3,  ,  ,  ,  ,  ,  ,  ,  ,  ,  ,  ,   */
+  /*X*/   R, P, R, R, R, R, R, R, R, R, A, A, A, R, R, R, R, R, R, A, R, A,
+  /*LV*/  R, P, A, A, S, S, S, A, A, S, A, A, A, A, W, A, A, A, A, A, A, A,
+  /*AV*/  R, P, R, R, A, R, A, S, A, S, A, A, A, A, R, A, A, A, A, A, A, A,
+  /*AD1*/ R, P, R, R, R, R, R, S, S, S, A, A, A, A, R, A, A, A, A, A, A, A,
+  /*AD2*/ R, P, R, R, R, R, R, S, A, S, A, A, A, S, R, R, R, R, A, A, R, A,
+  /*BV1*/ R, P, S, A, A, R, R, S, S, S, A, A, A, S, A, R, R, R, A, A, R, A,
+  /*BV2*/ R, P, R, A, R, R, R, A, R, R, R, A, A, S, R, R, R, R, A, A, R, A,
+  /*FV1*/ R, P, R, R, R, R, R, R, R, R, A, A, A, R, R, R, R, R, R, A, R, A,
+  /*FV2*/ R, P, R, A, R, R, R, A, R, R, A, A, A, A, R, A, A, A, R, A, A, A,
+  /*FV3*/ R, P, R, R, R, R, R, R, R, R, A, A, A, R, R, R, R, R, R, A, R, A,
+  /*IV*/  R, P, A, R, R, R, R, R, R, R, R, A, A, R, R, R, R, R, R, A, R, A,
+  /*C1*/  R, P, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A,
+  /*C2*/  R, P, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A, A,
+  /*PH*/  R, P, R, R, R, R, R, R, R, R, R, A, R, R, R, R, R, R, R, R, R, R,
+  /*S1*/  R, P, A, A, A, A, A, A, A, A, A, A, A, A, R, R, S, S, A, A, A, A,
+  /*S2*/  R, P, A, A, A, A, S, A, A, A, A, A, A, A, R, R, S, S, A, A, A, A,
+  /*S3*/  R, P, R, R, R, R, R, R, R, R, A, A, A, R, R, R, R, R, R, A, R, A,
+  /*S4*/  R, P, A, A, A, A, S, A, A, A, A, A, A, A, A, S, R, R, A, A, A, A,
+  /*T*/   R, P, R, R, R, R, R, A, A, A, A, A, A, A, R, R, A, A, R, A, A, A,
+  /*LG*/  R, P, R, R, R, R, R, A, R, R, A, A, A, A, R, R, A, A, A, A, A, A,
+  /*CR*/  R, P, A, A, A, A, A, A, A, A, A, A, A, S, A, A, R, A, A, A, A, A,
+  /*NP*/  R, P, R, R, R, R, R, R, R, R, A, A, A, R, R, R, R, R, R, A, R, A,
 #undef P
 #undef A
 #undef W
@@ -181,7 +183,8 @@ lx_tham_im_preedit_action (gunichar prev_c, gunichar input_c)
   LxThamCharClass c0 = lx_tham_char_class (prev_c);
   LxThamCharClass c1 = lx_tham_char_class (input_c);
 
-  return XC_LV == c0 && (XC_C1 == c1 || XC_C2 == c1) ? IA_C : IA_R;
+  return XC_LV == c0 && (XC_C1 == c1 || XC_C2 == c1 || XC_S4 == c1)
+           ? IA_C : IA_R;
 }
 
 /*
