@@ -145,6 +145,7 @@ lx_tn_im_conversion (const gchar *surrounding,
 
   switch (input_char)
     {
+      case 0x0e8d: /* NYO NYUNG */
       case 0x0e94: /* DO DEK */
       case 0x0e98: /* THO THONG */
       case 0x0e9a: /* BO BAIMAI */
@@ -157,6 +158,7 @@ lx_tn_im_conversion (const gchar *surrounding,
         output_char = 0;
         switch (input_char)
           {
+            case 0x0e8d: /* NYO NYUNG */  output_char = 0x0ebd;       break;
             case 0x0e94: /* DO DEK */     output_char = TN_SUBDEK;    break;
             case 0x0e98: /* THO THONG */  output_char = TN_SUBTHONG;  break;
             case 0x0e9a: /* BO BAIMAI */  output_char = TN_SUBBAIMAI; break;
