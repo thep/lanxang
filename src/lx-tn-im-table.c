@@ -147,6 +147,7 @@ lx_tn_im_conversion (const gchar *surrounding,
     {
       case 0x0e8d: /* NYO NYUNG */
       case 0x0e94: /* DO DEK */
+      case 0x0e95: /* TO TAO */
       case 0x0e98: /* THO THONG */
       case 0x0e9a: /* BO BAIMAI */
       case 0x0e9e: /* PHO PHAN */
@@ -160,6 +161,7 @@ lx_tn_im_conversion (const gchar *surrounding,
           {
             case 0x0e8d: /* NYO NYUNG */  output_char = 0x0ebd;       break;
             case 0x0e94: /* DO DEK */     output_char = TN_SUBDEK;    break;
+            case 0x0e95: /* TO TAO */     output_char = TN_SUBTAO;    break;
             case 0x0e98: /* THO THONG */  output_char = TN_SUBTHONG;  break;
             case 0x0e9a: /* BO BAIMAI */  output_char = TN_SUBBAIMAI; break;
             case 0x0e9e: /* PHO PHAN */   output_char = TN_SUBPHAN;   break;
