@@ -145,6 +145,7 @@ lx_tn_im_conversion (const gchar *surrounding,
 
   switch (input_char)
     {
+      case 0x0e88: /* CHO CHAN */
       case 0x0e8d: /* NYO NYUNG */
       case 0x0e94: /* DO DEK */
       case 0x0e95: /* TO TAO */
@@ -159,6 +160,7 @@ lx_tn_im_conversion (const gchar *surrounding,
         output_char = 0;
         switch (input_char)
           {
+            case 0x0e88: /* CHO CHAN */   output_char = TN_SUBCHAN;   break;
             case 0x0e8d: /* NYO NYUNG */  output_char = 0x0ebd;       break;
             case 0x0e94: /* DO DEK */     output_char = TN_SUBDEK;    break;
             case 0x0e95: /* TO TAO */     output_char = TN_SUBTAO;    break;
