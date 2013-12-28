@@ -191,15 +191,33 @@ lx_tn_im_conversion (const gchar *surrounding,
         output_char = 0;
         switch (prev_char)
           {
-            case 0x0e82: /* KHO KHAI */   output_char = TN_KHAINU;    break;
-            case 0x0e84: /* KHO KHWAI */  output_char = TN_KHWAINU;   break;
-            case 0x0e96: /* THO THUNG */  output_char = TN_THUNGNU;   break;
-            case 0x0eaa: /* SO SUA */     output_char = TN_SUANU;     break;
-            case 0x0eab: /* HO HIP */     output_char = 0x0edc;       break;
+            case 0x0e82: /* KHO KHAI */
+              conv->del_offset = -2;
+              output_char = TN_KHAINU;
+              break;
+            case 0x0e84: /* KHO KHWAI */
+              conv->del_offset = -2;
+              output_char = TN_KHWAINU;
+              break;
+            case 0x0e96: /* THO THUNG */
+              conv->del_offset = -2;
+              output_char = TN_THUNGNU;
+              break;
+            case 0x0eaa: /* SO SUA */
+              conv->del_offset = -2;
+              output_char = TN_SUANU;
+              break;
+            case 0x0eab: /* HO HIP */
+              conv->del_offset = -2;
+              output_char = 0x0edc;
+              break;
+            default:
+              conv->del_offset = -1;
+              output_char = TN_SUBNU;
+              break;
           }
         if (output_char)
           {
-            conv->del_offset = -2;
             u8_copy_unichar (conv->commit_text, sizeof (conv->commit_text),
                              output_char);
             return TRUE;

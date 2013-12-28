@@ -53,6 +53,7 @@ LxTNImAction lx_tn_im_action (gunichar prev_c, gunichar input_c);
 #define TN_SUBDEK     0x0EE6
 #define TN_SUBTAO     0x0EE7
 #define TN_SUBCHAN    0x0EE8
+#define TN_SUBNU      0x0EE9
 
 /* Conjuncts */
 #define TN_KHAINU     0x0EF0
