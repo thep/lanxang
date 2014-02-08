@@ -245,24 +245,11 @@ lx_tn_im_conversion (const gchar *surrounding,
         if (!prev_p || TN_PHINTHU != g_utf8_get_char (prev_p))
           break;
 
-        output_char = 0;
-        prev_p = g_utf8_find_prev_char (surrounding, prev_p);
-        prev_char_2 = (prev_p) ? g_utf8_get_char (prev_p) : 0;
-
-        switch (prev_char_2)
-          {
-            default:
-              conv->del_offset = -1;
-              output_char = TN_SUBLING;
-              break;
-          }
-        if (output_char)
-          {
-            u8_copy_unichar (conv->commit_text, sizeof (conv->commit_text),
-                             output_char);
-            return TRUE;
-          }
-        break;
+        conv->del_offset = -1;
+        output_char = TN_SUBLING;
+        u8_copy_unichar (conv->commit_text, sizeof (conv->commit_text),
+                         output_char);
+        return TRUE;
 
       default:
         break;
