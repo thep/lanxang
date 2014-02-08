@@ -138,7 +138,7 @@ lx_tn_im_conversion (const gchar *surrounding,
                      gunichar     input_char,
                      LxTNConv    *conv)
 {
-  gunichar     prev_char, output_char;
+  gunichar     prev_char_1, prev_char_2, output_char;
   const gchar *cursor_p, *prev_p;
 
   cursor_p = g_utf8_offset_to_pointer (surrounding, cursor_pos);
@@ -180,26 +180,27 @@ lx_tn_im_conversion (const gchar *surrounding,
 
       case 0x0e99: /* NO NU */
         prev_p = g_utf8_find_prev_char (surrounding, cursor_p);
-        if (!prev_p || TN_PHINTHU != g_utf8_get_char (prev_p))
+        prev_char_1 = g_utf8_get_char (prev_p);
+        if (!prev_p || (TN_PHINTHU != prev_char_1 && 0x200d != prev_char_1))
           break;
 
         prev_p = g_utf8_find_prev_char (surrounding, prev_p);
-        if (!prev_p)
-          break;
-        prev_char = g_utf8_get_char (prev_p);
+        prev_char_2 = (prev_p) ? g_utf8_get_char (prev_p) : 0;
 
         output_char = 0;
-        switch (prev_char)
+        /* {HO HIP + ZWJ} + NO NU */
+        if (0x200d == prev_char_1 && 0x0eab == prev_char_2)
           {
-            case 0x0eab: /* HO HIP */
-              conv->del_offset = -2;
-              output_char = 0x0edc;
-              break;
-            default:
-              conv->del_offset = -1;
-              output_char = TN_SUBNU;
-              break;
+            conv->del_offset = -2;
+            output_char = 0x0edc;
           }
+        /* {PHINTHU} + NO NU */
+        else if (TN_PHINTHU == prev_char_1)
+          {
+            conv->del_offset = -1;
+            output_char = TN_SUBNU;
+          }
+
         if (output_char)
           {
             u8_copy_unichar (conv->commit_text, sizeof (conv->commit_text),
@@ -210,24 +211,27 @@ lx_tn_im_conversion (const gchar *surrounding,
 
       case 0x0ea1: /* MO MA */
         prev_p = g_utf8_find_prev_char (surrounding, cursor_p);
-        if (!prev_p || TN_PHINTHU != g_utf8_get_char (prev_p))
+        prev_char_1 = g_utf8_get_char (prev_p);
+        if (!prev_p || (TN_PHINTHU != prev_char_1 && 0x200d != prev_char_1))
           break;
 
-        output_char = 0;
         prev_p = g_utf8_find_prev_char (surrounding, prev_p);
-        prev_char = (prev_p) ? g_utf8_get_char (prev_p) : 0;
+        prev_char_2 = (prev_p) ? g_utf8_get_char (prev_p) : 0;
 
-        switch (prev_char)
+        output_char = 0;
+        /* {HO HIP + ZWJ} + MO MA */
+        if (0x200d == prev_char_1 && 0x0eab == prev_char_2)
           {
-            case 0x0eab: /* HO HIP */
-              conv->del_offset = -2;
-              output_char = 0x0edd;
-              break;
-            default:
-              conv->del_offset = -1;
-              output_char = TN_SUBMA;
-              break;
+            conv->del_offset = -2;
+            output_char = 0x0edd;
           }
+        /* {PHINTHU} + MO MA */
+        else if (TN_PHINTHU == prev_char_1)
+          {
+            conv->del_offset = -1;
+            output_char = TN_SUBMA;
+          }
+
         if (output_char)
           {
             u8_copy_unichar (conv->commit_text, sizeof (conv->commit_text),
@@ -243,9 +247,9 @@ lx_tn_im_conversion (const gchar *surrounding,
 
         output_char = 0;
         prev_p = g_utf8_find_prev_char (surrounding, prev_p);
-        prev_char = (prev_p) ? g_utf8_get_char (prev_p) : 0;
+        prev_char_2 = (prev_p) ? g_utf8_get_char (prev_p) : 0;
 
-        switch (prev_char)
+        switch (prev_char_2)
           {
             default:
               conv->del_offset = -1;
