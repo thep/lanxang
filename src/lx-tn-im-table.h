@@ -55,16 +55,6 @@ LxTNImAction lx_tn_im_action (gunichar prev_c, gunichar input_c);
 #define TN_SUBCHAN    0x0EE8
 #define TN_SUBNU      0x0EE9
 
-/* Conjuncts */
-#define TN_KHAINU     0x0EF0
-#define TN_KHAIMA     0x0EF1
-#define TN_KHWAINU    0x0EF2
-#define TN_KHWAIMA    0x0EF3
-#define TN_THUNGNU    0x0EF4
-#define TN_THUNGLING  0x0EF5
-#define TN_SUANU      0x0EF6
-#define TN_SUAMA      0x0EF7
-
 typedef struct _LxTNConv LxTNConv;
 
 struct _LxTNConv

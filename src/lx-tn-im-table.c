@@ -191,22 +191,6 @@ lx_tn_im_conversion (const gchar *surrounding,
         output_char = 0;
         switch (prev_char)
           {
-            case 0x0e82: /* KHO KHAI */
-              conv->del_offset = -2;
-              output_char = TN_KHAINU;
-              break;
-            case 0x0e84: /* KHO KHWAI */
-              conv->del_offset = -2;
-              output_char = TN_KHWAINU;
-              break;
-            case 0x0e96: /* THO THUNG */
-              conv->del_offset = -2;
-              output_char = TN_THUNGNU;
-              break;
-            case 0x0eaa: /* SO SUA */
-              conv->del_offset = -2;
-              output_char = TN_SUANU;
-              break;
             case 0x0eab: /* HO HIP */
               conv->del_offset = -2;
               output_char = 0x0edc;
@@ -235,18 +219,6 @@ lx_tn_im_conversion (const gchar *surrounding,
 
         switch (prev_char)
           {
-            case 0x0e82: /* KHO KHAI */
-              conv->del_offset = -2;
-              output_char = TN_KHAIMA;
-              break;
-            case 0x0e84: /* KHO KHWAI */
-              conv->del_offset = -2;
-              output_char = TN_KHWAIMA;
-              break;
-            case 0x0eaa: /* SO SUA */
-              conv->del_offset = -2;
-              output_char = TN_SUAMA;
-              break;
             case 0x0eab: /* HO HIP */
               conv->del_offset = -2;
               output_char = 0x0edd;
@@ -275,10 +247,6 @@ lx_tn_im_conversion (const gchar *surrounding,
 
         switch (prev_char)
           {
-            case 0x0e96: /* THO THUNG */
-              conv->del_offset = -2;
-              output_char = TN_THUNGLING;
-              break;
             default:
               conv->del_offset = -1;
               output_char = TN_SUBLING;
