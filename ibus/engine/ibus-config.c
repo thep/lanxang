@@ -19,6 +19,8 @@
 
 #include "ibus-config.h"
 
+#include <stdlib.h>
+
 /* Global variables */
 static IBusConfig *ibus_config = NULL;
 
