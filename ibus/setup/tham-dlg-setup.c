@@ -43,7 +43,7 @@ ibus_lanxang_tham_setup_dialog_new ()
   /* Get the top level content vbox */
   main_vbox = gtk_dialog_get_content_area (GTK_DIALOG (main_dlg));
   gtk_widget_set_margin_top (GTK_WIDGET (main_vbox), WIDGET_MARGINS);
-  gtk_widget_set_margin_left (GTK_WIDGET (main_vbox), WIDGET_MARGINS);
+  gtk_widget_set_margin_start (GTK_WIDGET (main_vbox), WIDGET_MARGINS);
 
   /* Input Sequence Check section label */
   widget = gtk_label_new (NULL);
@@ -52,14 +52,14 @@ ibus_lanxang_tham_setup_dialog_new ()
   gtk_label_set_markup (GTK_LABEL (widget), markup);
   g_free (markup);
   gtk_misc_set_alignment (GTK_MISC (widget), 0, 0.5);
-  gtk_widget_set_margin_right (widget, WIDGET_MARGINS);
+  gtk_widget_set_margin_end (widget, WIDGET_MARGINS);
   gtk_widget_show (widget);
   gtk_box_pack_start (GTK_BOX (main_vbox), widget, TRUE, FALSE, 0);
 
   /* Input Sequence Check vbox for radio buttons */
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-  gtk_widget_set_margin_left (vbox, WIDGET_MARGINS);
-  gtk_widget_set_margin_right (vbox, WIDGET_MARGINS);
+  gtk_widget_set_margin_start (vbox, WIDGET_MARGINS);
+  gtk_widget_set_margin_end (vbox, WIDGET_MARGINS);
   gtk_widget_show (vbox);
   gtk_box_pack_start (GTK_BOX (main_vbox), vbox, TRUE, TRUE, 0);
 
