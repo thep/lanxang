@@ -37,8 +37,8 @@ ibus_lanxang_tham_setup_dialog_new ()
   /* Create main window */
   main_dlg = gtk_dialog_new_with_buttons (_("IBus LanXang Tham Preferences"),
                                           NULL, GTK_DIALOG_MODAL,
-                                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                          GTK_STOCK_OK, GTK_RESPONSE_OK,
+                                          _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                          _("_OK"), GTK_RESPONSE_OK,
                                           NULL);
   /* Get the top level content vbox */
   main_vbox = gtk_dialog_get_content_area (GTK_DIALOG (main_dlg));
