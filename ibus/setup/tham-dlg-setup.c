@@ -51,7 +51,8 @@ ibus_lanxang_tham_setup_dialog_new ()
                                     _("Input sequence check mode:"));
   gtk_label_set_markup (GTK_LABEL (widget), markup);
   g_free (markup);
-  gtk_misc_set_alignment (GTK_MISC (widget), 0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (widget), 0);
+  gtk_label_set_yalign (GTK_LABEL (widget), 0.5);
   gtk_widget_set_margin_end (widget, WIDGET_MARGINS);
   gtk_widget_show (widget);
   gtk_box_pack_start (GTK_BOX (main_vbox), widget, TRUE, FALSE, 0);

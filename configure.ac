@@ -30,7 +30,7 @@ AC_CHECK_HEADERS([stdlib.h string.h])
 # Checks for library functions.
 PKG_CHECK_MODULES(IBUS, [ibus-1.0 >= 1.2.99])
 PKG_CHECK_MODULES(GLIB, [glib-2.0])
-PKG_CHECK_MODULES(GTK, [gtk+-3.0 >= 3.12])
+PKG_CHECK_MODULES(GTK, [gtk+-3.0 >= 3.16])
 
 AC_CONFIG_FILES([Makefile
                  src/Makefile
