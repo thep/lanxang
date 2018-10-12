@@ -62,6 +62,7 @@ init (void)
   g_object_ref_sink (factory);
   ibus_factory_add_engine (factory, "lanxang-tham", IBUS_TYPE_LANXANG_ENGINE);
   ibus_factory_add_engine (factory, "lanxang-tn", IBUS_TYPE_LANXANG_ENGINE);
+  ibus_factory_add_engine (factory, "lanxang-pali", IBUS_TYPE_LANXANG_ENGINE);
 
   if (opt_ibus)
     {

@@ -33,5 +33,16 @@
       <description>Input method for Thai Noi script</description>
       <rank>0</rank>
     </engine>
+    <engine>
+      <name>lanxang-pali</name>
+      <language>lo</language>
+      <license>GPL</license>
+      <author>Theppitak Karoonboonyanan &lt;theppitak@gmail.com&gt;</author>
+      <icon>${pkgdatadir}/icons/ibus-lanxang-pali.svg</icon>
+      <layout>us</layout>
+      <longname>LanXang Lao-Pali</longname>
+      <description>Input method for Lao script with Pali extension</description>
+      <rank>0</rank>
+    </engine>
   </engines>
 </component>

@@ -60,6 +60,15 @@ ibus_lanxang_get_component ()
                                                        "Theppitak Karoonboonyanan <thep@linux.thai.net>",
                                                        PKGDATADIR"/icons/ibus-lanxang-tn.svg",
                                                        "us"));
+      ibus_component_add_engine (component,
+                                 ibus_engine_desc_new ("lanxang-pali",
+                                                       "LanXang Lao-Pali",
+                                                       "Input method for Lao script with Pali extension",
+                                                       "lo",
+                                                       "GPL",
+                                                       "Theppitak Karoonboonyanan <theppitak@gmail.com>",
+                                                       PKGDATADIR"/icons/ibus-lanxang-pali.svg",
+                                                       "us"));
     }
 
   return component;

@@ -15,6 +15,10 @@ liblanxang_a_SOURCES = \
 	lx-tn-kbd.c \
 	lx-tn-im-table.h \
 	lx-tn-im-table.c \
+	lx-pali-kbd.h \
+	lx-pali-kbd.c \
+	lx-pali-im-table.h \
+	lx-pali-im-table.c \
 	$(NULL)
 
 liblanxang_a_CFLAGS = \

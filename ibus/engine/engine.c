@@ -25,6 +25,7 @@
 #include "lx-iengine.h"
 #include "lx-tham-engine.h"
 #include "lx-tn-engine.h"
+#include "lx-pali-engine.h"
 #include "ibus-config.h"
 #include <glib.h>
 #include <string.h>
@@ -100,6 +101,10 @@ ibus_lanxang_engine_constructor (GType                  type,
   else if (name && strcmp (name, "lanxang-tn") == 0)
     {
       engine->lx_iengine = g_object_new (LX_TYPE_TN_ENGINE, NULL);
+    }
+  else if (name && strcmp (name, "lanxang-pali") == 0)
+    {
+      engine->lx_iengine = g_object_new (LX_TYPE_PALI_ENGINE, NULL);
     }
 
   return G_OBJECT (engine);
