@@ -54,6 +54,7 @@ ibus_lanxang_engine_constructor (GType                  type,
                                  GObjectConstructParam *construct_params);
 static void ibus_lanxang_engine_destroy (IBusLanXangEngine *lanxang_engine);
 
+static void ibus_lanxang_engine_enable (IBusEngine *engine);
 static gboolean ibus_lanxang_engine_process_key_event (IBusEngine *engine,
                                                        guint       keyval,
                                                        guint       keycode,
@@ -78,6 +79,7 @@ ibus_lanxang_engine_class_init (IBusLanXangEngineClass *klass)
   object_class->constructor = ibus_lanxang_engine_constructor;
   ibus_object_class->destroy
     = (IBusObjectDestroyFunc) ibus_lanxang_engine_destroy;
+  engine_class->enable = ibus_lanxang_engine_enable;
   engine_class->process_key_event = ibus_lanxang_engine_process_key_event;
 }
 
@@ -125,6 +127,14 @@ ibus_lanxang_engine_init (IBusLanXangEngine *lanxang_engine)
     {
       g_object_ref_sink (lanxang_engine);
     }
+}
+
+static void
+ibus_lanxang_engine_enable (IBusEngine *engine)
+{
+  /* dummy call to tell the input context that the engine will utilize
+     surrounding-text */
+  ibus_engine_get_surrounding_text (engine, NULL, NULL, NULL);
 }
 
 static gboolean
