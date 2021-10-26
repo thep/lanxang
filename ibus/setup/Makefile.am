@@ -22,8 +22,8 @@ ibus_setup_lanxang_tham_CFLAGS = \
 	$(NULL)
 
 ibus_setup_lanxang_tham_LDADD = \
+	$(top_builddir)/ibus/engine/libibus-lanxang-config.a \
 	$(IBUS_LIBS) \
 	$(GTK_LIBS) \
-	$(top_builddir)/ibus/engine/libibus-lanxang-config.a \
 	$(NULL)
 

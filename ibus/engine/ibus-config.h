@@ -21,11 +21,10 @@
 #define __IBUS_CONFIG_H__
 
 #include "engine.h"
-#include <ibus.h>
 
 /* Configuration names */
-#define CONFIG_SECTION  "engine/LanXang"
-#define CONFIG_THAM_ISC_MODE "tham_isc_mode"
+#define CONFIG_SCHEMA  "org.freedesktop.ibus.lanxang"
+#define CONFIG_THAM_ISC_MODE "tham-isc-mode"
 
 typedef struct _IBusLanXangSetupOptions IBusLanXangSetupOptions;
 
@@ -34,7 +33,7 @@ struct _IBusLanXangSetupOptions
   IscMode tham_isc_mode;
 };
 
-void ibus_lanxang_init_config (IBusBus *bus);
+void ibus_lanxang_init_config (void);
 
 void ibus_lanxang_read_config (IBusLanXangSetupOptions *opt);
 void ibus_lanxang_write_config (const IBusLanXangSetupOptions *opt);

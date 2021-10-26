@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <enum id="org.freedesktop.ibus.lanxang.iscmode">
+    <value nick="Passthrough" value="0"/>
+    <value nick="Basic" value="1"/>
+    <value nick="Strict" value="2"/>
+  </enum>
+  <schema id="org.freedesktop.ibus.lanxang" path="/org/freedesktop/ibus/engine/lanxang/" gettext-domain="ibus-lanxang">
+    <key name="tham-isc-mode" enum="org.freedesktop.ibus.lanxang.iscmode">
+      <default>'Basic'</default>
+      <summary>Input sequence check mode</summary>
+      <description>
+        Strictness of input sequence checking.
+        'Passthrough' does not check anything.
+        'Basic' checks input just to ensure proper text rendering.
+        'Strict' is more picky on Tham orthography correctness.
+      </description>
+    </key>
+  </schema>
+</schemalist>

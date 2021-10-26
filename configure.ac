@@ -32,11 +32,14 @@ PKG_CHECK_MODULES(IBUS, [ibus-1.0 >= 1.2.99])
 PKG_CHECK_MODULES(GLIB, [glib-2.0])
 PKG_CHECK_MODULES(GTK, [gtk+-3.0 >= 3.16])
 
+GLIB_GSETTINGS
+
 AC_CONFIG_FILES([Makefile
                  src/Makefile
                  ibus/Makefile
                  ibus/engine/Makefile
                  ibus/engine/lanxang.xml.in
+                 ibus/dconf/Makefile
                  ibus/setup/Makefile
                  ibus/icons/Makefile
                  po/Makefile.in])

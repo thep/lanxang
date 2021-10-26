@@ -63,9 +63,9 @@ static gboolean ibus_lanxang_engine_process_key_event (IBusEngine *engine,
 G_DEFINE_TYPE (IBusLanXangEngine, ibus_lanxang_engine, IBUS_TYPE_ENGINE)
 
 void
-ibus_lanxang_init (IBusBus *bus)
+ibus_lanxang_init (void)
 {
-  ibus_lanxang_init_config (bus);
+  ibus_lanxang_init_config ();
 }
 
 

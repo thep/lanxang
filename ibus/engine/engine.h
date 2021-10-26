@@ -54,7 +54,7 @@ enum _IscMode
 
 GType   ibus_lanxang_engine_get_type ();
 
-void ibus_lanxang_init (IBusBus *bus);
+void ibus_lanxang_init (void);
 
 #endif /* __ENGINE_H__ */
 

@@ -18,55 +18,34 @@
  */
 
 #include "ibus-config.h"
+#include <gio/gio.h>
 
 #include <stdlib.h>
 
 /* Global variables */
-static IBusConfig *ibus_config = NULL;
+static GSettings *ibus_lanxang_settings = NULL;
 
 void
-ibus_lanxang_init_config (IBusBus *bus)
+ibus_lanxang_init_config (void)
 {
-  if (!ibus_config)
+  if (!ibus_lanxang_settings)
     {
-      ibus_config = ibus_bus_get_config (bus);
+      ibus_lanxang_settings = g_settings_new (CONFIG_SCHEMA);
     }
-}
-
-static void
-set_default_config (IBusLanXangSetupOptions *opt)
-{
-  opt->tham_isc_mode = ISC_BASIC;
 }
 
 void
 ibus_lanxang_read_config (IBusLanXangSetupOptions *opt)
 {
-  GVariant *val;
-
-  set_default_config (opt);
-
-  /* Get input sequence check mode */
-  val = ibus_config_get_value (ibus_config, CONFIG_SECTION,
-                               CONFIG_THAM_ISC_MODE);
-  if (val)
-    {
-      gint32    v;
-      g_variant_get (val, "i", &v);
-      opt->tham_isc_mode = v;
-      g_variant_unref (val);
-    }
+  opt->tham_isc_mode = g_settings_get_enum (ibus_lanxang_settings,
+                                            CONFIG_THAM_ISC_MODE);
 }
 
 void
 ibus_lanxang_write_config (const IBusLanXangSetupOptions *opt)
 {
-  GVariant *val;
-
-  /* Set input sequence check mode */
-  val = g_variant_new_int32 (opt->tham_isc_mode);
-  ibus_config_set_value (ibus_config, CONFIG_SECTION,
-                         CONFIG_THAM_ISC_MODE, val);
+  g_settings_set_enum (ibus_lanxang_settings,
+                       CONFIG_THAM_ISC_MODE, opt->tham_isc_mode);
 }
 
 gboolean

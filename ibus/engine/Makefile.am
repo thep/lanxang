@@ -43,10 +43,9 @@ ibus_engine_lanxang_CFLAGS = \
 	$(NULL)
 
 ibus_engine_lanxang_LDADD = \
-	$(IBUS_LIBS) \
-	$(GLIB_LIBS) \
 	$(top_builddir)/src/liblanxang.a \
 	libibus-lanxang-config.a \
+	$(IBUS_LIBS) \
 	$(NULL)
 
 noinst_LIBRARIES = libibus-lanxang-config.a

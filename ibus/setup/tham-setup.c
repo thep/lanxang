@@ -93,7 +93,7 @@ main (int argc, char **argv)
   bus = ibus_bus_new ();
   g_signal_connect (bus, "disconnected",
                     G_CALLBACK (ibus_lanxang_tham_disconnected_cb), NULL);
-  ibus_lanxang_init_config (bus);
+  ibus_lanxang_init_config ();
 
   ibus_lanxang_read_config (&opt);
   ibus_lanxang_tham_setup_set_values (GTK_DIALOG (main_dlg), &opt);

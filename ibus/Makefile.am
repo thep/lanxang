@@ -1,1 +1,1 @@
-SUBDIRS = engine setup icons
+SUBDIRS = engine dconf setup icons
