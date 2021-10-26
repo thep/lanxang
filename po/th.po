@@ -1,14 +1,14 @@
 # Thai translation  of lanxang.
-# Copyright (C) 2012-2016 Theppitak Karoonboonyanan <thep@linux.thai.net>
+# Copyright (C) 2012-2021 Theppitak Karoonboonyanan <theppitak@gmail.com>
 # This file is distributed under the same license as the lanxang package.
-# Theppitak Karoonboonyanan <theppitak@gmail.com>, 2012-2016.
+# Theppitak Karoonboonyanan <theppitak@gmail.com>, 2012-2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: lanxang 0.1.0\n"
 "Report-Msgid-Bugs-To: esaan-script-wg@googlegroups.com\n"
-"POT-Creation-Date: 2016-01-25 15:40+0700\n"
-"PO-Revision-Date: 2016-01-25 15:42+0700\n"
+"POT-Creation-Date: 2021-10-26 16:39+0700\n"
+"PO-Revision-Date: 2021-10-26 16:48+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <theppitak@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "Language: th\n"
@@ -16,7 +16,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#. Create main window
+#: ibus/dconf/org.freedesktop.ibus.lanxang.gschema.xml:11
+msgid "Input sequence check mode"
+msgstr "รูปแบบการตรวจสอบลำดับอักขระ"
+
+#: ibus/dconf/org.freedesktop.ibus.lanxang.gschema.xml:12
+msgid ""
+"Strictness of input sequence checking. 'Passthrough' does not check "
+"anything. 'Basic' checks input just to ensure proper text rendering. "
+"'Strict' is more picky on Tham orthography correctness."
+msgstr ""
+"ความเข้มงวดของการตรวจสอบลำดับอักขระ: 'Passthrough' จะไม่ตรวจสอบใดๆ 'Basic' "
+"ตรวจสอบลำดับเพียงเพื่อให้สามารถจัดแสดงข้อความได้อย่างเหมาะสมเท่านั้น 'Strict' "
+"จะเข้มงวดมากขึ้นเรื่องความถูกต้องของอักขรวิธีอักษรธรรม"
+
 #: ibus/setup/tham-dlg-setup.c:38
 msgid "IBus LanXang Tham Preferences"
 msgstr "ปรับแต่ง IBus LanXang สำหรับอักษรธรรม"
@@ -33,28 +46,27 @@ msgstr "_ตกลง"
 msgid "Input sequence check mode:"
 msgstr "รูปแบบการตรวจสอบลำดับอักขระ:"
 
-#. - "No Check" choice
-#: ibus/setup/tham-dlg-setup.c:67
+#: ibus/setup/tham-dlg-setup.c:68
 msgid "_No Check"
 msgstr "ไ_ม่ตรวจ"
 
-#: ibus/setup/tham-dlg-setup.c:70
+#: ibus/setup/tham-dlg-setup.c:71
 msgid "Let all key sequences pass through."
 msgstr "อนุญาตให้พิมพ์ได้ทุกลำดับ"
 
-#: ibus/setup/tham-dlg-setup.c:80
+#: ibus/setup/tham-dlg-setup.c:81
 msgid "_Basic Check"
 msgstr "_พื้นฐาน"
 
-#: ibus/setup/tham-dlg-setup.c:83
+#: ibus/setup/tham-dlg-setup.c:84
 msgid "Check using basic rules, allowing more spelling exceptions."
 msgstr "ตรวจสอบลำดับโดยใช้กฎพื้นฐาน ซึ่งจะยอมรับวิธีสะกดแบบพิเศษต่างๆ"
 
-#: ibus/setup/tham-dlg-setup.c:93
+#: ibus/setup/tham-dlg-setup.c:94
 msgid "_Strict Check"
 msgstr "เ_ข้มงวด"
 
-#: ibus/setup/tham-dlg-setup.c:96
+#: ibus/setup/tham-dlg-setup.c:97
 msgid ""
 "Check using more strict orthographical rules, disallowing many exeptions."
 msgstr "ตรวจสอบลำดับโดยใช้กฎอักขรวิธีที่เข้มงวดขึ้น ซึ่งจะไม่ยอมรับวิธีสะกดแบบพิเศษหลายกรณี"
