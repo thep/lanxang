@@ -5,7 +5,7 @@
     <value nick="Basic" value="1"/>
     <value nick="Strict" value="2"/>
   </enum>
-  <schema id="org.freedesktop.ibus.lanxang" path="/org/freedesktop/ibus/engine/lanxang/" gettext-domain="ibus-lanxang">
+  <schema id="org.freedesktop.ibus.lanxang" path="/org/freedesktop/ibus/engine/lanxang/" gettext-domain="lanxang">
     <key name="tham-isc-mode" enum="org.freedesktop.ibus.lanxang.iscmode">
       <default>'Basic'</default>
       <summary>Tham input sequence check mode</summary>
