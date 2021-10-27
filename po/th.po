@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lanxang 0.1.0\n"
 "Report-Msgid-Bugs-To: esaan-script-wg@googlegroups.com\n"
-"POT-Creation-Date: 2021-10-26 16:39+0700\n"
-"PO-Revision-Date: 2021-10-26 16:48+0700\n"
+"POT-Creation-Date: 2021-10-27 16:21+0700\n"
+"PO-Revision-Date: 2021-10-27 16:24+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <theppitak@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "Language: th\n"
@@ -17,18 +17,46 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ibus/dconf/org.freedesktop.ibus.lanxang.gschema.xml:11
-msgid "Input sequence check mode"
-msgstr "รูปแบบการตรวจสอบลำดับอักขระ"
+msgid "Tham input sequence check mode"
+msgstr "รูปแบบการตรวจสอบลำดับอักขระอักษรธรรม"
 
 #: ibus/dconf/org.freedesktop.ibus.lanxang.gschema.xml:12
 msgid ""
-"Strictness of input sequence checking. 'Passthrough' does not check "
+"Strictness of Tham input sequence checking. 'Passthrough' does not check "
 "anything. 'Basic' checks input just to ensure proper text rendering. "
 "'Strict' is more picky on Tham orthography correctness."
 msgstr ""
-"ความเข้มงวดของการตรวจสอบลำดับอักขระ: 'Passthrough' จะไม่ตรวจสอบใดๆ 'Basic' "
-"ตรวจสอบลำดับเพียงเพื่อให้สามารถจัดแสดงข้อความได้อย่างเหมาะสมเท่านั้น 'Strict' "
+"ความเข้มงวดของการตรวจสอบลำดับอักขระอักษรธรรม: 'Passthrough' จะไม่ตรวจสอบใดๆ "
+"'Basic' ตรวจสอบลำดับเพียงเพื่อให้สามารถจัดแสดงข้อความได้อย่างเหมาะสมเท่านั้น 'Strict' "
 "จะเข้มงวดมากขึ้นเรื่องความถูกต้องของอักขรวิธีอักษรธรรม"
+
+#: ibus/dconf/org.freedesktop.ibus.lanxang.gschema.xml:21
+msgid "Thai Noi input sequence check mode"
+msgstr "รูปแบบการตรวจสอบลำดับอักขระอักษรไทยน้อย"
+
+#: ibus/dconf/org.freedesktop.ibus.lanxang.gschema.xml:22
+msgid ""
+"Strictness of Thai Noi input sequence checking. 'Passthrough' does not check "
+"anything. 'Basic' checks input just to ensure proper text rendering. "
+"'Strict' is more picky on Thai Noi orthography correctness."
+msgstr ""
+"ความเข้มงวดของการตรวจสอบลำดับอักขระอักษรไทยน้อย: 'Passthrough' จะไม่ตรวจสอบใดๆ "
+"'Basic' ตรวจสอบลำดับเพียงเพื่อให้สามารถจัดแสดงข้อความได้อย่างเหมาะสมเท่านั้น 'Strict' "
+"จะเข้มงวดมากขึ้นเรื่องความถูกต้องของอักขรวิธีอักษรไทยน้อย"
+
+#: ibus/dconf/org.freedesktop.ibus.lanxang.gschema.xml:31
+msgid "Lao Pali input sequence check mode"
+msgstr "รูปแบบการตรวจสอบลำดับอักขระภาษาบาลีอักษรลาว"
+
+#: ibus/dconf/org.freedesktop.ibus.lanxang.gschema.xml:32
+msgid ""
+"Strictness of Lao Pali input sequence checking. 'Passthrough' does not check "
+"anything. 'Basic' checks input just to ensure proper text rendering. "
+"'Strict' is more picky on Lao Pali orthography correctness."
+msgstr ""
+"ความเข้มงวดของการตรวจสอบลำดับอักขระภาษาบาลีอักษรลาว: 'Passthrough' จะไม่ตรวจสอบใดๆ "
+"'Basic' ตรวจสอบลำดับเพียงเพื่อให้สามารถจัดแสดงข้อความได้อย่างเหมาะสมเท่านั้น 'Strict' "
+"จะเข้มงวดมากขึ้นเรื่องความถูกต้องของอักขรวิธีภาษาบาลีอักษรลาว"
 
 #: ibus/setup/tham-dlg-setup.c:38
 msgid "IBus LanXang Tham Preferences"
