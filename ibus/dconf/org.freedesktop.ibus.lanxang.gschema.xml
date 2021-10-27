@@ -8,12 +8,32 @@
   <schema id="org.freedesktop.ibus.lanxang" path="/org/freedesktop/ibus/engine/lanxang/" gettext-domain="ibus-lanxang">
     <key name="tham-isc-mode" enum="org.freedesktop.ibus.lanxang.iscmode">
       <default>'Basic'</default>
-      <summary>Input sequence check mode</summary>
+      <summary>Tham input sequence check mode</summary>
       <description>
-        Strictness of input sequence checking.
+        Strictness of Tham input sequence checking.
         'Passthrough' does not check anything.
         'Basic' checks input just to ensure proper text rendering.
         'Strict' is more picky on Tham orthography correctness.
+      </description>
+    </key>
+    <key name="tn-isc-mode" enum="org.freedesktop.ibus.lanxang.iscmode">
+      <default>'Basic'</default>
+      <summary>Thai Noi input sequence check mode</summary>
+      <description>
+        Strictness of Thai Noi input sequence checking.
+        'Passthrough' does not check anything.
+        'Basic' checks input just to ensure proper text rendering.
+        'Strict' is more picky on Thai Noi orthography correctness.
+      </description>
+    </key>
+    <key name="pali-isc-mode" enum="org.freedesktop.ibus.lanxang.iscmode">
+      <default>'Basic'</default>
+      <summary>Lao Pali input sequence check mode</summary>
+      <description>
+        Strictness of Lao Pali input sequence checking.
+        'Passthrough' does not check anything.
+        'Basic' checks input just to ensure proper text rendering.
+        'Strict' is more picky on Lao Pali orthography correctness.
       </description>
     </key>
   </schema>

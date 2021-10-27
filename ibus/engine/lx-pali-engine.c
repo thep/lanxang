@@ -78,7 +78,7 @@ lx_pali_engine_init (LxPaliEngine *lx_pali_engine)
 
   /* Read config */
   ibus_lanxang_read_config (&opt);
-  lx_pali_engine->isc_mode = opt.tham_isc_mode;
+  lx_pali_engine->isc_mode = opt.pali_isc_mode;
 }
 
 static gunichar

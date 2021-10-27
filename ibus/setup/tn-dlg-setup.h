@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
 /*
- *  Copyright (C) 2012 Theppitak Karoonboonyanan <thep@linux.thai.net>
+ *  Copyright (C) 2021 Theppitak Karoonboonyanan <theppitak@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,34 +17,20 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
  */
 
-#ifndef __IBUS_CONFIG_H__
-#define __IBUS_CONFIG_H__
+#ifndef __TN_DLG_SETUP_H__
+#define __TN_DLG_SETUP_H__
 
-#include "engine.h"
+#include "ibus-config.h"
+#include <gtk/gtk.h>
 
-/* Configuration names */
-#define CONFIG_SCHEMA  "org.freedesktop.ibus.lanxang"
+GtkWidget *ibus_lanxang_tn_setup_dialog_new ();
 
-#define CONFIG_THAM_ISC_MODE "tham-isc-mode"
-#define CONFIG_TN_ISC_MODE   "tn-isc-mode"
-#define CONFIG_PALI_ISC_MODE "pali-isc-mode"
+void ibus_lanxang_tn_setup_set_values (const GtkDialog *dlg,
+                                       const IBusLanXangSetupOptions *opt);
+void ibus_lanxang_tn_setup_get_values (const GtkDialog *dlg,
+                                       IBusLanXangSetupOptions *opt);
 
-typedef struct _IBusLanXangSetupOptions IBusLanXangSetupOptions;
-
-struct _IBusLanXangSetupOptions
-{
-  IscMode tham_isc_mode;
-  IscMode tn_isc_mode;
-  IscMode pali_isc_mode;
-};
-
-void ibus_lanxang_init_config (void);
-
-void ibus_lanxang_read_config (IBusLanXangSetupOptions *opt);
-void ibus_lanxang_write_config (const IBusLanXangSetupOptions *opt);
-gboolean force_engine_to_reload_config ();
-
-#endif /* __IBUS_CONFIG_H__ */
+#endif /* __TN_DLG_SETUP_H__ */
 
 /*
 vi:ts=2:nowrap:ai:expandtab

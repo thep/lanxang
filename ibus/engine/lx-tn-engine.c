@@ -79,7 +79,7 @@ lx_tn_engine_init (LxTNEngine *lx_tn_engine)
 
   /* Read config */
   ibus_lanxang_read_config (&opt);
-  lx_tn_engine->isc_mode = opt.tham_isc_mode;
+  lx_tn_engine->isc_mode = opt.tn_isc_mode;
 }
 
 static gunichar

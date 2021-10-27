@@ -39,6 +39,10 @@ ibus_lanxang_read_config (IBusLanXangSetupOptions *opt)
 {
   opt->tham_isc_mode = g_settings_get_enum (ibus_lanxang_settings,
                                             CONFIG_THAM_ISC_MODE);
+  opt->tn_isc_mode = g_settings_get_enum (ibus_lanxang_settings,
+                                          CONFIG_TN_ISC_MODE);
+  opt->pali_isc_mode = g_settings_get_enum (ibus_lanxang_settings,
+                                            CONFIG_PALI_ISC_MODE);
 }
 
 void
@@ -46,6 +50,10 @@ ibus_lanxang_write_config (const IBusLanXangSetupOptions *opt)
 {
   g_settings_set_enum (ibus_lanxang_settings,
                        CONFIG_THAM_ISC_MODE, opt->tham_isc_mode);
+  g_settings_set_enum (ibus_lanxang_settings,
+                       CONFIG_TN_ISC_MODE, opt->tn_isc_mode);
+  g_settings_set_enum (ibus_lanxang_settings,
+                       CONFIG_PALI_ISC_MODE, opt->pali_isc_mode);
 }
 
 gboolean

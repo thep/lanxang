@@ -31,6 +31,7 @@
       <layout>us</layout>
       <longname>LanXang Thai Noi</longname>
       <description>Input method for Thai Noi script</description>
+      <setup>${libexecdir}/ibus-setup-lanxang-tn</setup>
       <rank>0</rank>
     </engine>
     <engine>
@@ -42,6 +43,7 @@
       <layout>us</layout>
       <longname>LanXang Lao-Pali</longname>
       <description>Input method for Lao script with Pali extension</description>
+      <setup>${libexecdir}/ibus-setup-lanxang-pali</setup>
       <rank>0</rank>
     </engine>
   </engines>
