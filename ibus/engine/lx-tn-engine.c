@@ -75,11 +75,11 @@ lx_tn_engine_class_init (LxTNEngineClass *klass)
 static void
 lx_tn_engine_init (LxTNEngine *lx_tn_engine)
 {
-  IBusLanXangSetupOptions opt;
+  IBusLanXangTNOptions opt;
 
   /* Read config */
-  ibus_lanxang_read_config (&opt);
-  lx_tn_engine->isc_mode = opt.tn_isc_mode;
+  ibus_lanxang_read_tn_config (&opt);
+  lx_tn_engine->isc_mode = opt.isc_mode;
 }
 
 static gunichar

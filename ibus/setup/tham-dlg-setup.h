@@ -26,9 +26,9 @@
 GtkWidget *ibus_lanxang_tham_setup_dialog_new ();
 
 void ibus_lanxang_tham_setup_set_values (const GtkDialog *dlg,
-                                         const IBusLanXangSetupOptions *opt);
+                                         const IBusLanXangThamOptions *opt);
 void ibus_lanxang_tham_setup_get_values (const GtkDialog *dlg,
-                                         IBusLanXangSetupOptions *opt);
+                                         IBusLanXangThamOptions *opt);
 
 #endif /* __THAM_DLG_SETUP_H__ */
 

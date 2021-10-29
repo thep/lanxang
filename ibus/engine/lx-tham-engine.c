@@ -78,15 +78,15 @@ lx_tham_engine_class_init (LxThamEngineClass *klass)
 static void
 lx_tham_engine_init (LxThamEngine *lx_tham_engine)
 {
-  IBusLanXangSetupOptions opt;
+  IBusLanXangThamOptions opt;
 
   lx_tham_engine->is_preedit = FALSE;
   lx_tham_engine->preedit_str[0] = 0;
   lx_tham_engine->preedit_len = 0;
 
   /* Read config */
-  ibus_lanxang_read_config (&opt);
-  lx_tham_engine->isc_mode = opt.tham_isc_mode;
+  ibus_lanxang_read_tham_config (&opt);
+  lx_tham_engine->isc_mode = opt.isc_mode;
 }
 
 static gboolean

@@ -74,11 +74,11 @@ lx_pali_engine_class_init (LxPaliEngineClass *klass)
 static void
 lx_pali_engine_init (LxPaliEngine *lx_pali_engine)
 {
-  IBusLanXangSetupOptions opt;
+  IBusLanXangPaliOptions opt;
 
   /* Read config */
-  ibus_lanxang_read_config (&opt);
-  lx_pali_engine->isc_mode = opt.pali_isc_mode;
+  ibus_lanxang_read_pali_config (&opt);
+  lx_pali_engine->isc_mode = opt.isc_mode;
 }
 
 static gunichar

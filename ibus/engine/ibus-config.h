@@ -30,18 +30,46 @@
 #define CONFIG_PALI_ISC_MODE "pali-isc-mode"
 
 typedef struct _IBusLanXangSetupOptions IBusLanXangSetupOptions;
+typedef struct _IBusLanXangThamOptions  IBusLanXangThamOptions;
+typedef struct _IBusLanXangTNOptions    IBusLanXangTNOptions;
+typedef struct _IBusLanXangPaliOptions  IBusLanXangPaliOptions;
+
+struct _IBusLanXangThamOptions
+{
+  IscMode isc_mode;
+};
+
+struct _IBusLanXangTNOptions
+{
+  IscMode isc_mode;
+};
+
+struct _IBusLanXangPaliOptions
+{
+  IscMode isc_mode;
+};
 
 struct _IBusLanXangSetupOptions
 {
-  IscMode tham_isc_mode;
-  IscMode tn_isc_mode;
-  IscMode pali_isc_mode;
+  IBusLanXangThamOptions tham_options;
+  IBusLanXangTNOptions   tn_options;
+  IBusLanXangPaliOptions pali_options;
 };
 
 void ibus_lanxang_init_config (void);
 
 void ibus_lanxang_read_config (IBusLanXangSetupOptions *opt);
 void ibus_lanxang_write_config (const IBusLanXangSetupOptions *opt);
+
+void ibus_lanxang_read_tham_config (IBusLanXangThamOptions *opt);
+void ibus_lanxang_write_tham_config (const IBusLanXangThamOptions *opt);
+
+void ibus_lanxang_read_tn_config (IBusLanXangTNOptions *opt);
+void ibus_lanxang_write_tn_config (const IBusLanXangTNOptions *opt);
+
+void ibus_lanxang_read_pali_config (IBusLanXangPaliOptions *opt);
+void ibus_lanxang_write_pali_config (const IBusLanXangPaliOptions *opt);
+
 
 #endif /* __IBUS_CONFIG_H__ */
 

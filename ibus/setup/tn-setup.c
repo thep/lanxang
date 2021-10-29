@@ -57,7 +57,7 @@ main (int argc, char **argv)
 
   GtkWidget  *main_dlg;
   IBusBus    *bus;
-  IBusLanXangSetupOptions opt;
+  IBusLanXangTNOptions opt;
   int         ret;
 
   setlocale (LC_ALL, "");
@@ -95,14 +95,14 @@ main (int argc, char **argv)
                     G_CALLBACK (ibus_lanxang_tn_disconnected_cb), NULL);
   ibus_lanxang_init_config ();
 
-  ibus_lanxang_read_config (&opt);
+  ibus_lanxang_read_tn_config (&opt);
   ibus_lanxang_tn_setup_set_values (GTK_DIALOG (main_dlg), &opt);
 
   ret = gtk_dialog_run (GTK_DIALOG (main_dlg));
   if (GTK_RESPONSE_OK == ret)
     {
       ibus_lanxang_tn_setup_get_values (GTK_DIALOG (main_dlg), &opt);
-      ibus_lanxang_write_config (&opt);
+      ibus_lanxang_write_tn_config (&opt);
     }
 
   return 0;

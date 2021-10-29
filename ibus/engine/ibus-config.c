@@ -37,24 +37,64 @@ ibus_lanxang_init_config (void)
 void
 ibus_lanxang_read_config (IBusLanXangSetupOptions *opt)
 {
-  opt->tham_isc_mode = g_settings_get_enum (ibus_lanxang_settings,
-                                            CONFIG_THAM_ISC_MODE);
-  opt->tn_isc_mode = g_settings_get_enum (ibus_lanxang_settings,
-                                          CONFIG_TN_ISC_MODE);
-  opt->pali_isc_mode = g_settings_get_enum (ibus_lanxang_settings,
-                                            CONFIG_PALI_ISC_MODE);
+  ibus_lanxang_read_tham_config (&opt->tham_options);
+  ibus_lanxang_read_tn_config (&opt->tn_options);
+  ibus_lanxang_read_pali_config (&opt->pali_options);
 }
 
 void
 ibus_lanxang_write_config (const IBusLanXangSetupOptions *opt)
 {
-  g_settings_set_enum (ibus_lanxang_settings,
-                       CONFIG_THAM_ISC_MODE, opt->tham_isc_mode);
-  g_settings_set_enum (ibus_lanxang_settings,
-                       CONFIG_TN_ISC_MODE, opt->tn_isc_mode);
-  g_settings_set_enum (ibus_lanxang_settings,
-                       CONFIG_PALI_ISC_MODE, opt->pali_isc_mode);
+  ibus_lanxang_write_tham_config (&opt->tham_options);
+  ibus_lanxang_write_tn_config (&opt->tn_options);
+  ibus_lanxang_write_pali_config (&opt->pali_options);
 }
+
+
+void
+ibus_lanxang_read_tham_config (IBusLanXangThamOptions *opt)
+{
+  opt->isc_mode = g_settings_get_enum (ibus_lanxang_settings,
+                                       CONFIG_THAM_ISC_MODE);
+}
+
+void
+ibus_lanxang_write_tham_config (const IBusLanXangThamOptions *opt)
+{
+  g_settings_set_enum (ibus_lanxang_settings,
+                       CONFIG_THAM_ISC_MODE, opt->isc_mode);
+}
+
+
+void
+ibus_lanxang_read_tn_config (IBusLanXangTNOptions *opt)
+{
+  opt->isc_mode = g_settings_get_enum (ibus_lanxang_settings,
+                                       CONFIG_TN_ISC_MODE);
+}
+
+void
+ibus_lanxang_write_tn_config (const IBusLanXangTNOptions *opt)
+{
+  g_settings_set_enum (ibus_lanxang_settings,
+                       CONFIG_TN_ISC_MODE, opt->isc_mode);
+}
+
+
+void
+ibus_lanxang_read_pali_config (IBusLanXangPaliOptions *opt)
+{
+  opt->isc_mode = g_settings_get_enum (ibus_lanxang_settings,
+                                       CONFIG_PALI_ISC_MODE);
+}
+
+void
+ibus_lanxang_write_pali_config (const IBusLanXangPaliOptions *opt)
+{
+  g_settings_set_enum (ibus_lanxang_settings,
+                       CONFIG_PALI_ISC_MODE, opt->isc_mode);
+}
+
 
 /*
 vi:ts=2:nowrap:ai:expandtab

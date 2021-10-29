@@ -26,9 +26,9 @@
 GtkWidget *ibus_lanxang_tn_setup_dialog_new ();
 
 void ibus_lanxang_tn_setup_set_values (const GtkDialog *dlg,
-                                       const IBusLanXangSetupOptions *opt);
+                                       const IBusLanXangTNOptions *opt);
 void ibus_lanxang_tn_setup_get_values (const GtkDialog *dlg,
-                                       IBusLanXangSetupOptions *opt);
+                                       IBusLanXangTNOptions *opt);
 
 #endif /* __TN_DLG_SETUP_H__ */
 
