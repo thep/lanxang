@@ -56,13 +56,6 @@ ibus_lanxang_write_config (const IBusLanXangSetupOptions *opt)
                        CONFIG_PALI_ISC_MODE, opt->pali_isc_mode);
 }
 
-gboolean
-force_engine_to_reload_config ()
-{
-  return system ("ibus-daemon -xrd") == 0;
-}
-
-
 /*
 vi:ts=2:nowrap:ai:expandtab
 */

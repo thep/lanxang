@@ -103,10 +103,6 @@ main (int argc, char **argv)
     {
       ibus_lanxang_tn_setup_get_values (GTK_DIALOG (main_dlg), &opt);
       ibus_lanxang_write_config (&opt);
-      if (!opt_engine)
-        {
-          force_engine_to_reload_config ();
-        }
     }
 
   return 0;

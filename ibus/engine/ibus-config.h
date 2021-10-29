@@ -42,7 +42,6 @@ void ibus_lanxang_init_config (void);
 
 void ibus_lanxang_read_config (IBusLanXangSetupOptions *opt);
 void ibus_lanxang_write_config (const IBusLanXangSetupOptions *opt);
-gboolean force_engine_to_reload_config ();
 
 #endif /* __IBUS_CONFIG_H__ */
 
