@@ -40,20 +40,15 @@ LxTNImAction lx_tn_im_action (gunichar prev_c, gunichar input_c);
  * Surround text conversion
  */
 
-/* Virama */
-#define TN_PHINTHU    0x0EBA
+/* Conjunct Joiner */
+#define TN_JOINER    0x200d
 
-/* Subjoins */
-#define TN_SUBBAIMAI  0x0EE0
-#define TN_SUBMA      0x0EE1
-#define TN_SUBLING    0x0EE2
-#define TN_SUBSUA     0x0EE3
-#define TN_SUBPHAN    0x0EE4
-#define TN_SUBTHONG   0x0EE5
-#define TN_SUBDEK     0x0EE6
-#define TN_SUBTAO     0x0EE7
-#define TN_SUBCHAN    0x0EE8
-#define TN_SUBNU      0x0EE9
+#define TN_HOHIP     0x0eab
+#define TN_NONU      0x0e99
+#define TN_MOMA      0x0ea1
+
+#define TN_HONO      0x0edc
+#define TN_HOMO      0x0edd
 
 typedef struct _LxTNConv LxTNConv;
 

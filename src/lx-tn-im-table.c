@@ -145,111 +145,26 @@ lx_tn_im_conversion (const gchar *surrounding,
 
   switch (input_char)
     {
-      case 0x0e88: /* CHO CHAN */
-      case 0x0e8d: /* NYO NYUNG */
-      case 0x0e94: /* DO DEK */
-      case 0x0e95: /* TO TAO */
-      case 0x0e98: /* THO THONG */
-      case 0x0e9a: /* BO BAIMAI */
-      case 0x0e9e: /* PHO PHAN */
-      case 0x0eaa: /* SO SUA */
-        prev_p = g_utf8_find_prev_char (surrounding, cursor_p);
-        if (!prev_p || TN_PHINTHU != g_utf8_get_char (prev_p))
-          break;
-
-        output_char = 0;
-        switch (input_char)
-          {
-            case 0x0e88: /* CHO CHAN */   output_char = TN_SUBCHAN;   break;
-            case 0x0e8d: /* NYO NYUNG */  output_char = 0x0ebd;       break;
-            case 0x0e94: /* DO DEK */     output_char = TN_SUBDEK;    break;
-            case 0x0e95: /* TO TAO */     output_char = TN_SUBTAO;    break;
-            case 0x0e98: /* THO THONG */  output_char = TN_SUBTHONG;  break;
-            case 0x0e9a: /* BO BAIMAI */  output_char = TN_SUBBAIMAI; break;
-            case 0x0e9e: /* PHO PHAN */   output_char = TN_SUBPHAN;   break;
-            case 0x0eaa: /* SO SUA */     output_char = TN_SUBSUA;    break;
-          }
-        if (output_char)
-          {
-            conv->del_offset = -1;
-            u8_copy_unichar (conv->commit_text, sizeof (conv->commit_text),
-                             output_char);
-            return TRUE;
-          }
-        break;
-
-      case 0x0e99: /* NO NU */
+      case TN_NONU:
+      case TN_MOMA:
         prev_p = g_utf8_find_prev_char (surrounding, cursor_p);
         prev_char_1 = g_utf8_get_char (prev_p);
-        if (!prev_p || (TN_PHINTHU != prev_char_1 && 0x200d != prev_char_1))
+        if (!prev_p || TN_JOINER != prev_char_1)
           break;
 
         prev_p = g_utf8_find_prev_char (surrounding, prev_p);
         prev_char_2 = (prev_p) ? g_utf8_get_char (prev_p) : 0;
 
-        output_char = 0;
-        /* {HO HIP + ZWJ} + NO NU */
-        if (0x200d == prev_char_1 && 0x0eab == prev_char_2)
+        /* {HO HIP + ZWJ} + {NO NU, MO MA} */
+        if (TN_JOINER == prev_char_1 && TN_HOHIP == prev_char_2)
           {
             conv->del_offset = -2;
-            output_char = 0x0edc;
-          }
-        /* {PHINTHU} + NO NU */
-        else if (TN_PHINTHU == prev_char_1)
-          {
-            conv->del_offset = -1;
-            output_char = TN_SUBNU;
-          }
-
-        if (output_char)
-          {
+            output_char = (TN_NONU == input_char) ? TN_HONO : TN_HOMO;
             u8_copy_unichar (conv->commit_text, sizeof (conv->commit_text),
                              output_char);
             return TRUE;
           }
         break;
-
-      case 0x0ea1: /* MO MA */
-        prev_p = g_utf8_find_prev_char (surrounding, cursor_p);
-        prev_char_1 = g_utf8_get_char (prev_p);
-        if (!prev_p || (TN_PHINTHU != prev_char_1 && 0x200d != prev_char_1))
-          break;
-
-        prev_p = g_utf8_find_prev_char (surrounding, prev_p);
-        prev_char_2 = (prev_p) ? g_utf8_get_char (prev_p) : 0;
-
-        output_char = 0;
-        /* {HO HIP + ZWJ} + MO MA */
-        if (0x200d == prev_char_1 && 0x0eab == prev_char_2)
-          {
-            conv->del_offset = -2;
-            output_char = 0x0edd;
-          }
-        /* {PHINTHU} + MO MA */
-        else if (TN_PHINTHU == prev_char_1)
-          {
-            conv->del_offset = -1;
-            output_char = TN_SUBMA;
-          }
-
-        if (output_char)
-          {
-            u8_copy_unichar (conv->commit_text, sizeof (conv->commit_text),
-                             output_char);
-            return TRUE;
-          }
-        break;
-
-      case 0x0ea5: /* LO LING */
-        prev_p = g_utf8_find_prev_char (surrounding, cursor_p);
-        if (!prev_p || TN_PHINTHU != g_utf8_get_char (prev_p))
-          break;
-
-        conv->del_offset = -1;
-        output_char = TN_SUBLING;
-        u8_copy_unichar (conv->commit_text, sizeof (conv->commit_text),
-                         output_char);
-        return TRUE;
 
       default:
         break;
