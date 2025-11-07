@@ -1,0 +1,169 @@
+﻿c esaan_tham generated from template at 2025-11-01 13:00:30
+c with name "Esaan Tham"
+store(&VERSION) '10.0'
+store(&NAME) 'Esaan Tham'
+store(&COPYRIGHT) 'Copyright © Theppitak Karoonboonyanan'
+store(&KEYBOARDVERSION) '1.0'
+store(&TARGETS) 'any'
+store(&BITMAP) 'esaan_tham.ico'
+store(&VISUALKEYBOARD) 'esaan_tham.kvks'
+store(&LAYOUTFILE) 'esaan_tham.keyman-touch-layout'
+
+begin Unicode > use(main)
+
+store(cons) 'ᨠᨡᨢᨣᨤᨥᨦᨧᨨᨩᨪᨫᨬᨭᨮᨯᨰᨱᨲᨳᨴᨵᨶᨷᨸᨹᨺᨻᨼᨽᨾᨿᩀᩁᩃᩅᩆᩇᩈᩉᩊᩋᩌ'
+store(lv) 'ᩮᩯᩰᩱᩲ'
+
+group(main) using keys
+c Reorder LV and CONS
+any(lv) dk(lv_key) + [SHIFT K_BKSLASH] > 'ᨢ' index(lv, 1)
+any(lv) dk(lv_key) + [K_BKSLASH] > 'ᨤ' index(lv, 1)
+any(lv) dk(lv_key) + [SHIFT K_PERIOD] > 'ᩊ' index(lv, 1)
+any(lv) dk(lv_key) + [SHIFT K_COMMA] > 'ᨰ' index(lv, 1)
+any(lv) dk(lv_key) + [SHIFT K_V] > 'ᩌ' index(lv, 1)
+any(lv) dk(lv_key) + [SHIFT K_C] > 'ᨨ' index(lv, 1)
+any(lv) dk(lv_key) + [K_SLASH] > 'ᨺ' index(lv, 1)
+any(lv) dk(lv_key) + [K_COMMA] > 'ᨾ' index(lv, 1)
+any(lv) dk(lv_key) + [K_M] > 'ᨴ' index(lv, 1)
+any(lv) dk(lv_key) + [K_V] > 'ᩋ' index(lv, 1)
+any(lv) dk(lv_key) + [K_X] > 'ᨸ' index(lv, 1)
+any(lv) dk(lv_key) + [K_Z] > 'ᨹ' index(lv, 1)
+any(lv) dk(lv_key) + [SHIFT K_COLON] > 'ᨪ' index(lv, 1)
+any(lv) dk(lv_key) + [SHIFT K_L] > 'ᩆ' index(lv, 1)
+any(lv) dk(lv_key) + [SHIFT K_K] > 'ᩇ' index(lv, 1)
+any(lv) dk(lv_key) + [SHIFT K_G] > 'ᨫ' index(lv, 1)
+any(lv) dk(lv_key) + [SHIFT K_D] > 'ᨭ' index(lv, 1)
+any(lv) dk(lv_key) + [SHIFT K_S] > 'ᨥ' index(lv, 1)
+any(lv) dk(lv_key) + [K_QUOTE] > 'ᨦ' index(lv, 1)
+any(lv) dk(lv_key) + [K_COLON] > 'ᩅ' index(lv, 1)
+any(lv) dk(lv_key) + [K_L] > 'ᩈ' index(lv, 1)
+any(lv) dk(lv_key) + [K_F] > 'ᨯ' index(lv, 1)
+any(lv) dk(lv_key) + [K_D] > 'ᨠ' index(lv, 1)
+any(lv) dk(lv_key) + [K_S] > 'ᩉ' index(lv, 1)
+any(lv) dk(lv_key) + [K_A] > 'ᨼ' index(lv, 1)
+any(lv) dk(lv_key) + [K_RBRKT] > 'ᩃ' index(lv, 1)
+any(lv) dk(lv_key) + [K_LBRKT] > 'ᨷ' index(lv, 1)
+any(lv) dk(lv_key) + [K_P] > 'ᨿ' index(lv, 1)
+any(lv) dk(lv_key) + [K_O] > 'ᨶ' index(lv, 1)
+any(lv) dk(lv_key) + [K_I] > 'ᩁ' index(lv, 1)
+any(lv) dk(lv_key) + [SHIFT K_LBRKT] > 'ᨮ' index(lv, 1)
+any(lv) dk(lv_key) + [SHIFT K_P] > 'ᨬ' index(lv, 1)
+any(lv) dk(lv_key) + [SHIFT K_I] > 'ᨱ' index(lv, 1)
+any(lv) dk(lv_key) + [SHIFT K_T] > 'ᨵ' index(lv, 1)
+any(lv) dk(lv_key) + [SHIFT K_R] > 'ᨯ' index(lv, 1)
+any(lv) dk(lv_key) + [SHIFT K_W] > 'ᩔ' index(lv, 1)
+any(lv) dk(lv_key) + [K_R] > 'ᨻ' index(lv, 1)
+any(lv) dk(lv_key) + [K_HYPHEN] > 'ᨡ' index(lv, 1)
+any(lv) dk(lv_key) + [K_9] > 'ᨲ' index(lv, 1)
+any(lv) dk(lv_key) + [K_EQUAL] > 'ᨩ' index(lv, 1)
+any(lv) dk(lv_key) + [K_0] > 'ᨧ' index(lv, 1)
+any(lv) dk(lv_key) + [K_8] > 'ᨣ' index(lv, 1)
+any(lv) dk(lv_key) + [K_5] > 'ᨳ' index(lv, 1)
+any(lv) dk(lv_key) + [K_4] > 'ᨽ' index(lv, 1)
+any(lv) dk(lv_key) + [K_1] > 'ᩀ' index(lv, 1)
+
+
++ [SHIFT RALT K_6] > 'ᩐ'
++ [RALT K_COMMA] > 'ᩜ'
++ [RALT K_G] > 'ᩑ'
++ [RALT K_6] > 'ᩏ'
++ [RALT K_U] > 'ᩎ'
++ [RALT K_B] > 'ᩍ'
++ [RALT K_O] > '᪫'
++ [RALT K_LBRKT] > 'ᩝ'
++ [RALT K_RBRKT] > 'ᩓ'
++ [RALT K_F] > 'ᩒ'
++ [K_BKQUOTE] > '᪥'
++ [SHIFT K_BKQUOTE] > '᪬'
++ [SHIFT K_BKSLASH] > 'ᨢ'
++ [K_BKSLASH] > 'ᨤ'
++ [SHIFT K_N] > '᩺'
++ [SHIFT K_SLASH] > 'ᩄ'
++ [SHIFT K_PERIOD] > 'ᩊ'
++ [SHIFT K_COMMA] > 'ᨰ'
++ [SHIFT K_M] > 'ᩐ'
++ [SHIFT K_B] > '᩠'
++ [SHIFT K_V] > 'ᩌ'
++ [SHIFT K_C] > 'ᨨ'
++ [SHIFT K_X] > 'ᩑ'
++ [SHIFT K_Z] > 'ᩕ'
++ [K_SLASH] > 'ᨺ'
++ [K_PERIOD] > 'ᩲ' dk(lv_key)
++ [K_COMMA] > 'ᨾ'
++ [K_M] > 'ᨴ'
++ [K_N] > 'ᩨ'
++ [K_B] > 'ᩥ'
++ [K_V] > 'ᩋ'
++ [K_C] > 'ᩯ' dk(lv_key)
++ [K_X] > 'ᨸ'
++ [K_Z] > 'ᨹ'
++ [SHIFT K_QUOTE] > 'ᩙ'
++ [SHIFT K_COLON] > 'ᨪ'
++ [SHIFT K_L] > 'ᩆ'
++ [SHIFT K_K] > 'ᩇ'
++ [SHIFT K_J] > 'ᩎ'
++ [SHIFT K_H] > 'ᩫ'
++ [SHIFT K_G] > 'ᨫ'
++ [SHIFT K_F] > 'ᩰ' dk(lv_key)
++ [SHIFT K_D] > 'ᨭ'
++ [SHIFT K_S] > 'ᨥ'
++ [SHIFT K_A] > 'ᩂ'
++ [K_QUOTE] > 'ᨦ'
++ [K_COLON] > 'ᩅ'
++ [K_L] > 'ᩈ'
++ [K_K] > 'ᩣ'
++ [K_J] > '᩵'
++ [K_H] > '᩶'
++ [K_G] > 'ᩮ' dk(lv_key)
++ [K_F] > 'ᨯ'
++ [K_D] > 'ᨠ'
++ [K_S] > 'ᩉ'
++ [K_A] > 'ᨼ'
++ [K_RBRKT] > 'ᩃ'
++ [K_LBRKT] > 'ᨷ'
++ [K_P] > 'ᨿ'
++ [K_O] > 'ᨶ'
++ [K_I] > 'ᩁ'
++ [K_U] > 'ᩦ'
++ [K_Y] > 'ᩢ'
++ [K_T] > 'ᩡ'
++ [SHIFT K_RBRKT] > 'ᩖ'
++ [SHIFT K_LBRKT] > 'ᨮ'
++ [SHIFT K_P] > 'ᨬ'
++ [SHIFT K_O] > '᪪'
++ [SHIFT K_I] > 'ᨱ'
++ [SHIFT K_U] > 'ᩍ'
++ [SHIFT K_Y] > 'ᩴ'
++ [SHIFT K_T] > 'ᨵ'
++ [SHIFT K_R] > 'ᨯ'
++ [SHIFT K_E] > 'ᩏ'
++ [SHIFT K_W] > 'ᩔ'
++ [SHIFT K_Q] > '᪐'
++ [K_R] > 'ᨻ'
++ [K_E] > 'ᩣᩴ'
++ [K_W] > 'ᩱ' dk(lv_key)
++ [K_Q] > 'ᪧ'
++ [SHIFT K_EQUAL] > '᪙'
++ [SHIFT K_HYPHEN] > '᪘'
++ [SHIFT K_0] > '᪗'
++ [SHIFT K_9] > '᪖'
++ [SHIFT K_8] > '᪕'
++ [K_HYPHEN] > 'ᨡ'
++ [K_9] > 'ᨲ'
++ [K_EQUAL] > 'ᨩ'
++ [K_0] > 'ᨧ'
++ [K_8] > 'ᨣ'
++ [SHIFT K_7] > 'ᩘ'
++ [K_7] > 'ᩧ'
++ [K_6] > 'ᩩ'
++ [SHIFT K_6] > 'ᩪ'
++ [SHIFT K_5] > '᪔'
++ [SHIFT K_4] > '᪓'
++ [SHIFT K_3] > '᪒'
++ [SHIFT K_2] > '᪑'
++ [SHIFT K_1] > 'ᩤ'
++ [K_5] > 'ᨳ'
++ [K_4] > 'ᨽ'
++ [K_3] > 'ᩬ'
++ [K_2] > 'ᩭ'
++ [K_1] > 'ᩀ'

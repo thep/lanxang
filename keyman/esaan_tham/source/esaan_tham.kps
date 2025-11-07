@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package>
+  <System>
+    <KeymanDeveloperVersion>18.0.244.0</KeymanDeveloperVersion>
+    <FileVersion>7.0</FileVersion>
+  </System>
+  <Options>
+    <ExecuteProgram></ExecuteProgram>
+    <ReadMeFile>readme.htm</ReadMeFile>
+    <LicenseFile>..\LICENSE.md</LicenseFile>
+    <MSIFileName></MSIFileName>
+    <MSIOptions></MSIOptions>
+    <FollowKeyboardVersion/>
+  </Options>
+  <StartMenu>
+    <Folder></Folder>
+    <Items/>
+  </StartMenu>
+  <Info>
+    <Name URL="">Esaan Tham</Name>
+    <Copyright URL="">Copyright © 2025 Theppitak Karoonboonyanan</Copyright>
+    <Author URL="mailto:theppitak@gmail.com">Theppitak Karoonboonyanan</Author>
+    <Description URL="">Lao/Esaan Tham keyboard layout based on Thai Kedmanee, with automatic leading vowel reordering.</Description>
+    <Version URL=""></Version>
+    <WebSite URL="https://github.com/thep/lanxang">https://github.com/thep/lanxang</WebSite>
+  </Info>
+  <Files>
+    <File>
+      <Name>..\build\esaan_tham.kmx</Name>
+      <Description></Description>
+      <CopyLocation>0</CopyLocation>
+      <FileType>.kmx</FileType>
+    </File>
+    <File>
+      <Name>..\build\esaan_tham.js</Name>
+      <Description></Description>
+      <CopyLocation>0</CopyLocation>
+      <FileType>.js</FileType>
+    </File>
+    <File>
+      <Name>..\build\esaan_tham.kvk</Name>
+      <Description></Description>
+      <CopyLocation>0</CopyLocation>
+      <FileType>.kvk</FileType>
+    </File>
+    <File>
+      <Name>readme.htm</Name>
+      <Description></Description>
+      <CopyLocation>0</CopyLocation>
+      <FileType>.htm</FileType>
+    </File>
+    <File>
+      <Name>..\LICENSE.md</Name>
+      <Description></Description>
+      <CopyLocation>0</CopyLocation>
+      <FileType>.md</FileType>
+    </File>
+    <File>
+      <Name>help\esaan_tham.php</Name>
+      <Description>File esaan_tham.php</Description>
+      <CopyLocation>0</CopyLocation>
+      <FileType>.php</FileType>
+    </File>
+    <File>
+      <Name>welcome\esaan_tham-kbd-0-default.png</Name>
+      <Description>File esaan_tham-kbd-0-default.png</Description>
+      <CopyLocation>0</CopyLocation>
+      <FileType>.png</FileType>
+    </File>
+    <File>
+      <Name>welcome\esaan_tham-kbd-1-shift.png</Name>
+      <Description>File esaan_tham-kbd-1-shift.png</Description>
+      <CopyLocation>0</CopyLocation>
+      <FileType>.png</FileType>
+    </File>
+    <File>
+      <Name>welcome\esaan_tham-kbd-2-ralt.png</Name>
+      <Description>File esaan_tham-kbd-2-ralt.png</Description>
+      <CopyLocation>0</CopyLocation>
+      <FileType>.png</FileType>
+    </File>
+    <File>
+      <Name>welcome\esaan_tham-kbd-3-shift-ralt.png</Name>
+      <Description>File esaan_tham-kbd-3-shift-ralt.png</Description>
+      <CopyLocation>0</CopyLocation>
+      <FileType>.png</FileType>
+    </File>
+    <File>
+      <Name>welcome\welcome.htm</Name>
+      <Description>File welcome.htm</Description>
+      <CopyLocation>0</CopyLocation>
+      <FileType>.htm</FileType>
+    </File>
+  </Files>
+  <Keyboards>
+    <Keyboard>
+      <ID>esaan_tham</ID>
+      <Languages>
+        <Language ID="th-Lana">Thai</Language>
+        <Language ID="lo-Lana">Lao</Language>
+        <Language ID="pi-Lana">Pali</Language>
+      </Languages>
+    </Keyboard>
+  </Keyboards>
+  <Strings/>
+</Package>
