@@ -60,6 +60,7 @@ group(main) using keys
 + [SHIFT K_LBRKT] > 'ຐ'
 + [SHIFT K_P] > 'ຽ'
 + [RALT K_O] > 'ໜ'
++ [RALT K_COMMA] > 'ໝ'
 + [SHIFT K_O] > 'ຯ'
 + [SHIFT K_I] > 'ຓ'
 + [SHIFT K_U] > '໊'

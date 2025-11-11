@@ -10,6 +10,7 @@
   <encoding name="unicode" fontname="Arial" fontsize="-12">
     <layer shift="RA">
       <key vkey="K_O">ໜ</key>
+      <key vkey="K_COMMA">ໝ</key>
     </layer>
     <layer shift="S">
       <key vkey="K_1">+</key>

@@ -441,7 +441,8 @@
                 "id": "K_M"
               },
               {
-                "id": "K_COMMA"
+                "id": "K_COMMA",
+                "text": "ໝ"
               },
               {
                 "id": "K_PERIOD"
