@@ -12,7 +12,12 @@ store(&LAYOUTFILE) 'thai_noi.keyman-touch-layout'
 begin Unicode > use(main)
 
 group(main) using keys
-+ [K_BKQUOTE] > '‍'
+
+c Special conversions
+'ຫ' U+200D + [K_COMMA] > 'ໝ'
+'ຫ' U+200D + [K_O] > 'ໜ'
+
++ [K_BKQUOTE] > U+200D
 + [SHIFT K_BKQUOTE] > '%'
 + [SHIFT K_SLASH] > '຦'
 + [SHIFT K_PERIOD] > 'ຬ'
