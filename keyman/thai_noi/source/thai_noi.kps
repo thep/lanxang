@@ -78,10 +78,18 @@
       <CopyLocation>0</CopyLocation>
       <FileType>.htm</FileType>
     </File>
+    <File>
+      <Name>Khottabun.otf</Name>
+      <Description>Font Khottabun</Description>
+      <CopyLocation>0</CopyLocation>
+      <FileType>.otf</FileType>
+    </File>
   </Files>
   <Keyboards>
     <Keyboard>
       <ID>thai_noi</ID>
+      <OSKFont>Khottabun.otf</OSKFont>
+      <DisplayFont>Khottabun.otf</DisplayFont>
       <Languages>
         <Language ID="lo-lo">Lao</Language>
       </Languages>
