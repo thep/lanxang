@@ -91,10 +91,18 @@
       <CopyLocation>0</CopyLocation>
       <FileType>.htm</FileType>
     </File>
+    <File>
+      <Name>Khottabun.otf</Name>
+      <Description>Font Khottabun</Description>
+      <CopyLocation>0</CopyLocation>
+      <FileType>.otf</FileType>
+    </File>
   </Files>
   <Keyboards>
     <Keyboard>
       <ID>esaan_tham</ID>
+      <OSKFont>Khottabun.otf</OSKFont>
+      <DisplayFont>Khottabun.otf</DisplayFont>
       <Languages>
         <Language ID="th-Lana">Thai</Language>
         <Language ID="lo-Lana">Lao</Language>
