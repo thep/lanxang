@@ -3,7 +3,7 @@ c with name "Esaan Tham"
 store(&VERSION) '10.0'
 store(&NAME) 'Esaan Tham'
 store(&COPYRIGHT) 'Copyright © Theppitak Karoonboonyanan'
-store(&KEYBOARDVERSION) '1.0'
+store(&KEYBOARDVERSION) '1.1'
 store(&TARGETS) 'any'
 store(&BITMAP) 'esaan_tham.ico'
 store(&VISUALKEYBOARD) 'esaan_tham.kvks'
@@ -61,6 +61,11 @@ any(lv) dk(lv_key) + [K_8] > 'ᨣ' index(lv, 1)
 any(lv) dk(lv_key) + [K_5] > 'ᨳ' index(lv, 1)
 any(lv) dk(lv_key) + [K_4] > 'ᨽ' index(lv, 1)
 any(lv) dk(lv_key) + [K_1] > 'ᩀ' index(lv, 1)
+
+c Reorder LV + C + RA -> C + RA + LV
+c Step 1: LV + C + RA -> C + LV + RA (from LV + C reordering)
+c Step 2: C + LV + RA -> C + RA + LV
+any(lv) + [SHIFT K_Z] > 'ᩕ' index(lv, 1)
 
 
 + [SHIFT RALT K_6] > 'ᩐ'
